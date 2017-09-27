@@ -98,3 +98,6 @@ dist/*
 
 #config
 config/local*.json
+
+#testing
+.tmp
