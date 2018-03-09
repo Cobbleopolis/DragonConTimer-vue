@@ -11,7 +11,6 @@ const middleware = webpackDevMiddleware(compiler, {
     publicPath: webpackConfig.output.publicPath
 });
 
-console.log(app);
 app.use(middleware);
 app.use(webpackHotMiddleware(compiler));
 
