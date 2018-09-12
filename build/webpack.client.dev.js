@@ -10,6 +10,7 @@ const buildpaths = require('../buildpaths');
 baseWebPackConfig.entry.unshift('webpack-hot-middleware/client?reload=true');
 
 module.exports = merge(baseWebPackConfig, {
+    mode: 'development',
     plugins: [
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('development')
@@ -19,8 +20,8 @@ module.exports = merge(baseWebPackConfig, {
             inject: 'body',
             filename: path.basename(buildpaths.client.htmlTemplateFile)
         }),
-        new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
+        new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
         new FriendlyErrorsPlugin()
     ]

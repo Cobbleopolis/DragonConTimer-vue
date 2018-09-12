@@ -6,6 +6,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const buildpaths = require('../buildpaths');
 
 module.exports = merge(baseWebPackConfig, {
+    mode: 'production',
     plugins: [
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')

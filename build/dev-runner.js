@@ -3,7 +3,23 @@ const webpack = require('webpack');
 const path = require('path');
 const winston = require('winston');
 
-const webpackServerConfig = require('./webpack.server');
+let webpackConfigFile;
+
+switch (process.env.NODE_ENV) {
+    case 'development':
+        webpackConfigFile = './webpack.server.dev';
+        break;
+    case 'production':
+        webpackConfigFile = './webpack.server.prod';
+        break;
+    case 'testing':
+        webpackConfigFile = './webpack.server.testing';
+        break;
+    default:
+        webpackConfigFile = './webpack.server';
+}
+
+const webpackServerConfig = require(webpackConfigFile);
 const buildPaths = require('../buildpaths');
 
 let compiler = webpack(webpackServerConfig);
@@ -13,13 +29,25 @@ let logger;
 let isExiting = false;
 
 function setupLogging() {
-    winston.loggers.add('webpack:server', {
-        console: {
-            colorize: true,
-            label: 'webpack:server'
-        }
+    // winston.loggers.add('webpack:server', {
+    //     console: {
+    //         colorize: true,
+    //         label: 'webpack:server'
+    //     }
+    // });
+    // logger = winston.loggers.get('webpack:server');
+    logger = winston.createLogger({
+        format: winston.format.simple(),
+        transports: [
+            new winston.transports.Console({
+                colorize: true,
+                label: 'webpack:server'
+            })
+        ],
+        levels: winston.config.syslog.levels
     });
-    logger = winston.loggers.get('webpack:server');
+    winston.addColors(winston.config.syslog.colors);
+
 }
 
 function init() {

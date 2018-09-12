@@ -9,6 +9,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = merge(baseWebPackConfig, {
+    mode: 'production',
     devtool: '#source-map',
     output: {
         path: buildpaths.output.base,

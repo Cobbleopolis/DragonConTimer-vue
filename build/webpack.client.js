@@ -1,5 +1,6 @@
 const buildpaths = require('../buildpaths');
 const path = require('path');
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
     entry: [
@@ -53,7 +54,22 @@ module.exports = {
                     limit: 10000,
                     name: buildpaths.assets(['fonts', '[name].[hash:7].[ext]'])
                 }
-            }
+            },
+            {
+                test: /\.css$/,
+                loader: 'vue-style-loader!css-loader'
+            },
+            {
+                test: /\.scss$/,
+                loader: 'vue-style-loader!css-loader!sass-loader'
+            },
+            {
+                test: /\.sass$/,
+                loader: 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
+            },
         ]
-    }
+    },
+    plugins: [
+        new VueLoaderPlugin()
+    ]
 };
