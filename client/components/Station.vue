@@ -7,11 +7,16 @@
                     <p class="card-text">{{ station }}</p>
                 </div>
             </div>
-            <div class="row mb-4">
+            <div class="row mb-1">
                 <div class="col-12">
-                    <b-progress :max="max" :value="currentTime" show-value class="mb-3"></b-progress>
+                    <p>{{$t('stations.fields.timeSinceCheckout.label')}}: <span v-if="timeSinceCheckout">{{timeSinceCheckout}}</span><span v-else>{{$t('data.invalidDuration')}}</span></p>
                 </div>
             </div>
+            <!--<div class="row mb-4">-->
+                <!--<div class="col-12">-->
+                    <!--<b-progress :max="max" :value="0" show-value class="mb-3"></b-progress>-->
+                <!--</div>-->
+            <!--</div>-->
             <b-form inline class="row justify-content-between">
                 <b-form-group id="playerNameInputGroup"
                               class="col-auto"
@@ -61,16 +66,23 @@
 
 <script>
     import StationSetFields from './modals/StationSetFields.vue';
+    import moment from 'moment';
+    import timeUtils from '../util/timeUtils'
 
     export default {
         components: {StationSetFields},
         name: 'station',
         props: ['station'],
+        created() {
+            this.getTimeFromNow();
+            setInterval(this.getTimeFromNow, 1000);
+        },
+        destroyed() {
+            clearInterval(this.getTimeFromNow)
+        },
         data() {
-            const MAX_TIME = 3600000;
             return {
-                max: MAX_TIME,
-                currentTime: Math.random() * MAX_TIME | 0
+                timeSinceCheckout: null
             }
         },
         computed: {
@@ -91,6 +103,9 @@
             },
             randomizeCurrentTime() {
                 this.currentTime = Math.random() * this.max | 0
+            },
+            getTimeFromNow() {
+                this.timeSinceCheckout = timeUtils.formatDurationFormat(moment.duration(moment(moment.now()).diff(this.station.checkoutTime)));
             }
         }
     };

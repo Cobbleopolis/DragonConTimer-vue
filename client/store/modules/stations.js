@@ -23,6 +23,7 @@ const mutations = {
                 stationObj.playerName,
                 stationObj.currentConsole,
                 stationObj.currentGame,
+                stationObj.checkoutTime
             );
             const existingStation = findExistingStation(state.stations, station);
             if (existingStation)
@@ -30,9 +31,8 @@ const mutations = {
             else
                 state.stations.push(station);
         }
-
-        if (Array.isArray(payload))
-            payload.forEach(addStation);
+        if (Array.isArray(payload) && Array.isArray(payload[0]))
+            payload[0].forEach(addStation)
         else
             addStation(payload)
     },

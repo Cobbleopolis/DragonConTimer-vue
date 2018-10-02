@@ -13,7 +13,8 @@ function init() {
             stationObj.consoleOptions,
             stationObj.playerName,
             stationObj.currentConsole,
-            stationObj.currentGame
+            stationObj.currentGame,
+            stationObj.checkoutTime
         )
     ).forEach(station => {stations.set(station.id, station)});
 }
