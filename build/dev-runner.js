@@ -13,7 +13,7 @@ switch (process.env.NODE_ENV) {
         webpackConfigFile = './webpack.server.prod';
         break;
     case 'testing':
-        webpackConfigFile = './webpack.server.testing';
+        webpackConfigFile = './webpack.server.test';
         break;
     default:
         webpackConfigFile = './webpack.server';
