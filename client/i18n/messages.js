@@ -21,6 +21,9 @@ export default {
                 disconnected: 'Disconnected'
             }
         },
+        data: {
+            invalidDuration: 'Invalid Duration'
+        },
         stations: {
             actions: {
                 title: 'Actions',
@@ -41,6 +44,11 @@ export default {
                     label: 'Game',
                     placeholder: 'Enter Game',
                     description: 'The game currently being played'
+                },
+                timeSinceCheckout: {
+                    label: 'Time Since Checkout',
+                    placeholder: '1:00:00',
+                    description: 'How long it has been since checkout.'
                 }
             },
             setFields: {

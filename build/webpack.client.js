@@ -1,5 +1,8 @@
 const buildpaths = require('../buildpaths');
-const path = require('path');
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+
+const isProduction = process.env.NODE_ENV === 'production'
 
 module.exports = {
     entry: [
@@ -53,7 +56,43 @@ module.exports = {
                     limit: 10000,
                     name: buildpaths.assets(['fonts', '[name].[hash:7].[ext]'])
                 }
-            }
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    isProduction ? MiniCssExtractPlugin.loader : 'vue-style-loader',
+                    'css-loader'
+                ]
+            },
+            {
+                test: /\.scss$/,
+                use: [
+                    isProduction ? MiniCssExtractPlugin.loader : 'vue-style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ]
+            },
+            {
+                test: /\.sass$/,
+                use: [
+                    isProduction ? MiniCssExtractPlugin.loader : 'vue-style-loader',
+                    'css-loader',
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            indentedSyntax: true
+                        }
+                    }
+
+                ]
+            },
         ]
-    }
+    },
+    plugins: [
+        new VueLoaderPlugin(),
+        new MiniCssExtractPlugin({
+            filename: buildpaths.output.assets(['css', 'styles.css']),
+            chunkFilename: buildpaths.output.assets(['css', '[id].css'])
+        })
+    ]
 };

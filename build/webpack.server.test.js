@@ -8,6 +8,7 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const buildpaths = require('../buildpaths');
 
 module.exports = merge(baseWebPackConfig, {
+    mode: 'development',
     plugins: [
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('testing')

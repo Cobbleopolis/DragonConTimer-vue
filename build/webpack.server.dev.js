@@ -10,9 +10,11 @@ const buildpaths = require('../buildpaths');
 baseWebPackConfig.entry.unshift('webpack-hot-middleware/client?reload=true');
 
 module.exports = merge(baseWebPackConfig, {
+    mode: 'development',
     plugins: [
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('development')
-        })
+        }),
+        new webpack.HotModuleReplacementPlugin()
     ]
 });
