@@ -13,12 +13,14 @@ export default new Vuex.Store({
     getters: {
 
     },
+    actions: {
+        setSocketConnected({commit}, isConnected) {
+            commit('setSocketConnected', isConnected)
+        }
+    },
     mutations: {
-        SOCKET_CONNECT: (state, status) => {
-            state.socketConnected = true;
-        },
-        SOCKET_DISCONNECT: (state) => {
-            state.socketConnected = false;
+        setSocketConnected(state, isConnected) {
+            state.socketConnected = isConnected
         }
     },
     modules: {

@@ -11,6 +11,19 @@
 
     export default {
         name: 'socket-status',
+        sockets: {
+            connect() {
+                console.log("Connect");
+                this.setSocketConnected(true)
+            },
+            disconnect() {
+                console.log("Disconnect");
+                this.setSocketConnected(false)
+            }
+        },
+        methods: {
+            ...mapActions(['setSocketConnected'])
+        },
         computed: {
             ...mapState(['socketConnected'])
         }

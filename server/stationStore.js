@@ -24,6 +24,7 @@ function getStations() {
 }
 
 function updateFields(updateFieldData) {
+    logger.debug("Updating fields: " + JSON.stringify(updateFieldData))
     if (updateFieldData) {
         let station = stations.get(updateFieldData.id);
         if (station) {
