@@ -1,6 +1,6 @@
 import logger from 'winston'
 import config from 'config'
-import Station from '../common/api/Station'
+import Station from '../../common/api/Station'
 
 let stations = new Map();
 

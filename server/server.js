@@ -2,7 +2,8 @@ import winston from 'winston';
 import app from './app.dev';
 import * as logging from './logging';
 import socketServer from './socketServer'
-import stationStore from './stationStore'
+import stationStore from './stores/stationStore'
+import consoleStore from './stores/consoleStore'
 
 logging.init(app);
 
@@ -14,6 +15,7 @@ const server = app.listen(PORT, () => {
 });
 
 stationStore.init();
+consoleStore.init();
 socketServer(server);
 
 
