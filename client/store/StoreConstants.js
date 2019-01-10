@@ -1,7 +1,8 @@
 import SocketEvents from '../../common/ref/SocketEvents'
 
 let StoreConstants = {
-    Stations: {}
+    Stations: {},
+    Consoles: {}
 }
 
 for (let i in SocketEvents) {

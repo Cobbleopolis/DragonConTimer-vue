@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import createLogger from 'vuex/dist/logger'
 
 import stationModule from './modules/stations'
+import consoleModule from './modules/consoles'
 
 Vue.use(Vuex);
 
@@ -24,7 +25,8 @@ export default new Vuex.Store({
         }
     },
     modules: {
-        stations: stationModule
+        stations: stationModule,
+        consoles: consoleModule
     },
     plugins: [createLogger()]
 });
