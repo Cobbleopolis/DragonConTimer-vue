@@ -1,8 +1,6 @@
 import Station from '../../../common/api/Station';
 import StoreConstants from '../StoreConstants';
 
-console.log(StoreConstants.Stations.ADD_STATION)
-
 const state = {
     stations: []
 };

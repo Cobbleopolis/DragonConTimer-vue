@@ -36,7 +36,7 @@
                     <b-form-input type="text"
                                   id="currentConsoleInput"
                                   readonly
-                                  v-model="station.currentConsole"></b-form-input>
+                                  v-model="fullConsoleName"></b-form-input>
                 </b-form-group>
                 <b-form-group id="currentGameInputGroup"
                               class="col-auto mr-auto"
@@ -68,6 +68,7 @@
     import StationSetFields from './modals/StationSetFields.vue';
     import moment from 'moment';
     import timeUtils from '../util/timeUtils'
+    import { mapState, mapActions, mapGetters } from 'vuex'
 
     export default {
         components: {StationSetFields},
@@ -95,6 +96,14 @@
                         return 'default';
                         break;
                 }
+            },
+            fullConsoleName: {
+                get() {
+                    if (!this.station.currentConsole || !this.getConsoleById()(this.station.currentConsole))
+                        return '';
+                    return this.getConsoleById()(this.station.currentConsole).name;
+                },
+                set(newValue) {}
             }
         },
         methods: {
@@ -106,7 +115,15 @@
             },
             getTimeFromNow() {
                 this.timeSinceCheckout = timeUtils.formatDurationFormat(moment.duration(moment(moment.now()).diff(this.station.checkoutTime)));
-            }
+            },
+            getConsoleName(event, value) {
+                if (!value || !this.getConsoleById(value))
+                    return '';
+                return this.getConsoleById(value).name;
+            },
+            ...mapGetters('consoles', {
+                getConsoleById: 'getById'
+            })
         }
     };
 </script>

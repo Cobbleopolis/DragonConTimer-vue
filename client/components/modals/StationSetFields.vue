@@ -27,10 +27,9 @@
                           label-for="currentGame"
                           :label="$t('stations.fields.currentGame.label')"
                           :description="$t('stations.fields.currentGame.description')">
-                <b-form-input type="text"
-                              id="currentGame"
-                              :placeholder="$t('stations.fields.currentGame.placeholder')"
-                              v-model="currentGame"></b-form-input>
+                <b-form-select id="currentGame"
+                               :options="currentGameOptions"
+                               v-model="currentGame"></b-form-select>
             </b-form-group>
             <template slot="modal-footer">
                 <b-button @click="hide" variant="secondary">{{ $t('forms.actions.cancel') }}</b-button>
@@ -41,21 +40,41 @@
 </template>
 
 <script>
+    import { mapState, mapActions, mapGetters } from 'vuex'
+    import SocketEvents from '../../../common/ref/SocketEvents'
+
     export default {
         name: 'station-set-fields',
         props: ['station'],
         data() {
             return {
-                consoleOptions: this.station.consoleOptions.map(opt => {
-                    return {
-                        value: opt,
-                        text: opt
-                    };
-                }),
                 playerName: this.station.playerName,
                 currentConsole: this.station.currentConsole,
-                currentGame: this.station.currentGame
+                currentGame: this.station.currentGame,
             };
+        },
+        computed: {
+            ...mapState('consoles', {
+                consoleOptions(state) {
+                    return this.station.consoleOptions.map(opt => {
+                        return {
+                            value: opt,
+                            text: (state.consoles[opt] && state.consoles[opt].name) ? state.consoles[opt].name : opt
+                        }
+                    })
+                },
+                currentGameOptions(state) {
+                    if (!this.currentConsole || !state.consoles[this.currentConsole])
+                        return {}
+                    else
+                        return state.consoles[this.currentConsole].games.sort().map(g => {
+                            return {
+                                value: g,
+                                text: g
+                            }
+                        })
+                }
+            }),
         },
         methods: {
             show() {
@@ -76,7 +95,7 @@
             },
             handleSubmit(e) {
                 if (e) e.preventDefault();
-                this.$socket.emit('UPDATE_STATION_FIELDS', {
+                this.$socket.emit(SocketEvents.Stations.UPDATE_STATION_FIELDS, {
                     id: this.station.id,
                     playerName: this.playerName,
                     currentConsole: this.currentConsole,
