@@ -1,4 +1,7 @@
 import Station from '../../../common/api/Station';
+import StoreConstants from '../StoreConstants';
+
+console.log(StoreConstants.Stations.ADD_STATION)
 
 const state = {
     stations: []
@@ -9,11 +12,13 @@ const getters = {
 };
 
 const actions = {
-
+    [StoreConstants.Stations.UPDATE_STATION_FIELDS]({commit}) {
+        commit(StoreConstants.Stations.UPDATE_STATION_FIELDS)
+    }
 };
 
 const mutations = {
-    SOCKET_ADD_STATION(state, payload) {
+    [StoreConstants.Stations.ADD_STATION](state, payload) {
         function addStation(stationObj) {
             const station = new Station(
                 stationObj.id,
@@ -31,12 +36,12 @@ const mutations = {
             else
                 state.stations.push(station);
         }
-        if (Array.isArray(payload) && Array.isArray(payload[0]))
-            payload[0].forEach(addStation)
+        if (Array.isArray(payload))
+            payload.forEach(addStation)
         else
             addStation(payload)
     },
-    SOCKET_UPDATE_STATION_FIELDS(state, updateFieldsData) {
+    [StoreConstants.Stations.UPDATE_STATION_FIELDS](state, updateFieldsData) {
         if (updateFieldsData) {
             const existingStation = findExistingStation(state.stations, updateFieldsData);
             if (existingStation) {

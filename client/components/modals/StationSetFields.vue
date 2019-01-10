@@ -76,8 +76,7 @@
             },
             handleSubmit(e) {
                 if (e) e.preventDefault();
-                console.log('Updating fields!');
-                this.$socket.emit('update_station_fields', {
+                this.$socket.emit('UPDATE_STATION_FIELDS', {
                     id: this.station.id,
                     playerName: this.playerName,
                     currentConsole: this.currentConsole,

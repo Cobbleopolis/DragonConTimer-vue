@@ -1,6 +1,6 @@
 import logger from 'winston'
 import config from 'config'
-import Station from '../common/api/Station'
+import Station from '../../common/api/Station'
 
 let stations = new Map();
 
@@ -24,6 +24,7 @@ function getStations() {
 }
 
 function updateFields(updateFieldData) {
+    logger.debug("Updating fields: " + JSON.stringify(updateFieldData))
     if (updateFieldData) {
         let station = stations.get(updateFieldData.id);
         if (station) {
