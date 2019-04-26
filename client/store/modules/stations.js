@@ -1,3 +1,4 @@
+import moment from 'moment';
 import Station from '../../../common/api/Station';
 import StoreConstants from '../StoreConstants';
 
@@ -46,6 +47,7 @@ const mutations = {
                 existingStation.station.playerName = updateFieldsData.playerName;
                 existingStation.station.currentConsole = updateFieldsData.currentConsole;
                 existingStation.station.currentGame = updateFieldsData.currentGame;
+                existingStation.station.checkoutTime = moment(updateFieldsData.checkoutTime);
                 state.stations.splice(existingStation.index, 1, existingStation.station)
             }
         }

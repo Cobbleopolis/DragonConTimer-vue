@@ -6,5 +6,9 @@ export default {
             return (momentObj.asHours() | 0) + ":" + moment.utc(momentObj.asMilliseconds()).format('mm:ss');
         else
             return null;
+    },
+
+    dateTimeFormat(momentObj) {
+        return momentObj.local().format("Y-MM-DDTHH:mm")
     }
 }

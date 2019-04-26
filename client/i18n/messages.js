@@ -28,27 +28,34 @@ export default {
             actions: {
                 title: 'Actions',
                 setFields: 'Set Fields',
-                randomizeTime: 'Randomize Time'
+                setState: 'Set State'
             },
             fields: {
                 playerName: {
                     label: 'Name',
                     placeholder: 'Enter Player Name',
-                    description: 'The name of the person playing'
+                    description: 'The name of the person playing.'
                 },
                 currentConsole: {
                     label: 'Console',
-                    description: 'The console currently being played'
+                    description: 'The console currently being played.'
                 },
                 currentGame: {
                     label: 'Game',
                     placeholder: 'Enter Game',
-                    description: 'The game currently being played'
+                    description: 'The game currently being played.'
                 },
                 timeSinceCheckout: {
                     label: 'Time Since Checkout',
                     placeholder: '1:00:00',
                     description: 'How long it has been since checkout.'
+                },
+                overrideCheckoutTimeEnable: {
+                    label: "Override Checkout Time"
+                },
+                checkoutTime: {
+                    label: "Checkout Time",
+                    description: "The time that the station was checked out. This is is your local time."
                 }
             },
             setFields: {

@@ -9,40 +9,40 @@
             </div>
             <div class="row mb-1">
                 <div class="col-12">
-                    <p>{{$t('stations.fields.timeSinceCheckout.label')}}: <span v-if="timeSinceCheckout">{{timeSinceCheckout}}</span><span v-else>{{$t('data.invalidDuration')}}</span></p>
+                    <p>{{$t('stations.fields.timeSinceCheckout.label')}}: <span v-if="timeSinceCheckout">{{timeSinceCheckout}}</span><span
+                            v-else>{{$t('data.invalidDuration')}}</span></p>
                 </div>
             </div>
-            <!--<div class="row mb-4">-->
-                <!--<div class="col-12">-->
-                    <!--<b-progress :max="max" :value="0" show-value class="mb-3"></b-progress>-->
-                <!--</div>-->
-            <!--</div>-->
             <b-form inline class="row justify-content-between">
                 <b-form-group id="playerNameInputGroup"
-                              class="col-auto"
                               label-for="playerNameInput"
-                              :label="$t('stations.fields.playerName.label')"
-                              horizontal>
+                              labelCols="auto"
+                              labelClass="mr-2"
+                              :label="$t('stations.fields.playerName.label')">
                     <b-form-input type="text"
                                   id="playerNameInput"
                                   readonly
-                                  v-model="station.playerName"></b-form-input>
+                                  v-model="station.playerName"
+                                  class="input-horizontal"></b-form-input>
                 </b-form-group>
                 <b-form-group id="currentConsoleInputGroup"
-                              class="col-auto"
+                              label-align="center"
+                              labelCols="auto"
+                              labelClass="mx-2"
                               label-for="currentConsoleInput"
-                              :label="$t('stations.fields.currentConsole.label')"
-                              horizontal>
+                              :label="$t('stations.fields.currentConsole.label')">
                     <b-form-input type="text"
                                   id="currentConsoleInput"
                                   readonly
                                   v-model="fullConsoleName"></b-form-input>
                 </b-form-group>
                 <b-form-group id="currentGameInputGroup"
-                              class="col-auto mr-auto"
+                              class="mr-auto"
+                              labelCols="auto"
+                              labelClass="mx-2"
+                              label-align="center"
                               label-for="currentGameInput"
-                              :label="$t('stations.fields.currentGame.label')"
-                              horizontal>
+                              :label="$t('stations.fields.currentGame.label')">
                     <b-form-input type="text"
                                   id="currentGameInput"
                                   readonly
@@ -53,8 +53,8 @@
                         <b-dropdown-item-button @click="showSetFields">
                             {{ $t('stations.actions.setFields') }}
                         </b-dropdown-item-button>
-                        <b-dropdown-item-button @click="randomizeCurrentTime">
-                            {{ $t('stations.actions.randomizeTime') }}
+                        <b-dropdown-item-button>
+                            {{ $t('stations.actions.setState') }}
                         </b-dropdown-item-button>
                     </b-dropdown>
                 </div>
@@ -65,18 +65,18 @@
 </template>
 
 <script>
-    import StationSetFields from './modals/StationSetFields.vue';
-    import moment from 'moment';
+    import StationSetFields from './modals/StationSetFields.vue'
+    import moment from 'moment'
     import timeUtils from '../util/timeUtils'
-    import { mapState, mapActions, mapGetters } from 'vuex'
+    import {mapGetters} from 'vuex'
 
     export default {
         components: {StationSetFields},
         name: 'station',
         props: ['station'],
         created() {
-            this.getTimeFromNow();
-            setInterval(this.getTimeFromNow, 1000);
+            this.getTimeFromNow()
+            setInterval(this.getTimeFromNow, 1000)
         },
         destroyed() {
             clearInterval(this.getTimeFromNow)
@@ -90,42 +90,40 @@
             borderVariant() {
                 switch (this.station.status) {
                     case 'DEFAULT':
-                        return 'default';
-                        break;
+                        return 'default'
+                        break
                     default:
-                        return 'default';
-                        break;
+                        return 'default'
+                        break
                 }
             },
             fullConsoleName: {
                 get() {
                     if (!this.station.currentConsole || !this.getConsoleById()(this.station.currentConsole))
-                        return '';
-                    return this.getConsoleById()(this.station.currentConsole).name;
+                        return ''
+                    return this.getConsoleById()(this.station.currentConsole).name
                 },
-                set(newValue) {}
+                set(newValue) {
+                }
             }
         },
         methods: {
             showSetFields() {
-                this.$refs.setFieldsModal.show();
-            },
-            randomizeCurrentTime() {
-                this.currentTime = Math.random() * this.max | 0
+                this.$refs.setFieldsModal.show()
             },
             getTimeFromNow() {
-                this.timeSinceCheckout = timeUtils.formatDurationFormat(moment.duration(moment(moment.now()).diff(this.station.checkoutTime)));
+                this.timeSinceCheckout = timeUtils.formatDurationFormat(moment.duration(moment(moment.now()).diff(this.station.checkoutTime)))
             },
             getConsoleName(event, value) {
                 if (!value || !this.getConsoleById(value))
-                    return '';
-                return this.getConsoleById(value).name;
+                    return ''
+                return this.getConsoleById(value).name
             },
             ...mapGetters('consoles', {
                 getConsoleById: 'getById'
             })
         }
-    };
+    }
 </script>
 
 <style lang="sass">

@@ -31,6 +31,18 @@
                                :options="currentGameOptions"
                                v-model="currentGame"></b-form-select>
             </b-form-group>
+            <b-form-checkbox name="overrideCheckoutTimeEnable" v-model="overrideTime" switch>
+                {{$t('stations.fields.overrideCheckoutTimeEnable.label')}}
+            </b-form-checkbox>
+            <b-form-group id="checkoutTimeGroup"
+                          label-for="checkoutTime"
+                          :label="$t('stations.fields.checkoutTime.label')"
+                          :description="$t('stations.fields.checkoutTime.description')"
+                          v-if="overrideTime">
+                <b-form-input type="datetime-local"
+                              id="checkoutTime"
+                              v-model="currentTime"/>
+            </b-form-group>
             <template slot="modal-footer">
                 <b-button @click="hide" variant="secondary">{{ $t('forms.actions.cancel') }}</b-button>
                 <b-button type="submit" variant="primary">{{ $t('forms.actions.submit') }}</b-button>
@@ -40,8 +52,9 @@
 </template>
 
 <script>
-    import { mapState, mapActions, mapGetters } from 'vuex'
+    import {mapState} from 'vuex'
     import SocketEvents from '../../../common/ref/SocketEvents'
+    import timeUtils from '../../util/timeUtils'
 
     export default {
         name: 'station-set-fields',
@@ -51,7 +64,9 @@
                 playerName: this.station.playerName,
                 currentConsole: this.station.currentConsole,
                 currentGame: this.station.currentGame,
-            };
+                overrideTime: false,
+                currentTime: timeUtils.dateTimeFormat(this.station.checkoutTime)
+            }
         },
         computed: {
             ...mapState('consoles', {
@@ -74,35 +89,38 @@
                             }
                         })
                 }
-            }),
+            })
         },
         methods: {
             show() {
-                this.onShow();
-                this.$refs.setFields.show();
+                this.onShow()
+                this.$refs.setFields.show()
             },
             onShow() {
-                this.playerName = this.station.playerName;
-                this.currentConsole = this.station.currentConsole;
-                this.currentGame = this.station.currentGame;
+                this.playerName = this.station.playerName
+                this.currentConsole = this.station.currentConsole
+                this.currentGame = this.station.currentGame
+                this.currentTime = timeUtils.dateTimeFormat(this.station.checkoutTime)
             },
             hide() {
-                this.$refs.setFields.hide();
+                this.$refs.setFields.hide()
+                this.overrideTime = false;
             },
             handleOk(e) {
-                e.cancel();
-                this.handleSubmit();
+                e.cancel()
+                this.handleSubmit()
             },
             handleSubmit(e) {
-                if (e) e.preventDefault();
+                if (e) e.preventDefault()
                 this.$socket.emit(SocketEvents.Stations.UPDATE_STATION_FIELDS, {
                     id: this.station.id,
                     playerName: this.playerName,
                     currentConsole: this.currentConsole,
-                    currentGame: this.currentGame
-                });
-                this.hide();
+                    currentGame: this.currentGame,
+                    checkoutTime: this.currentTime
+                })
+                this.hide()
             }
         }
-    };
+    }
 </script>

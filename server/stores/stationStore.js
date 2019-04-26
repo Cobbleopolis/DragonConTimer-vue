@@ -1,5 +1,6 @@
 import logger from 'winston'
 import config from 'config'
+import moment from 'moment'
 import Station from '../../common/api/Station'
 
 let stations = new Map();
@@ -31,6 +32,7 @@ function updateFields(updateFieldData) {
             station.playerName = updateFieldData.playerName;
             station.currentConsole = updateFieldData.currentConsole;
             station.currentGame = updateFieldData.currentGame;
+            station.checkoutTime = moment(updateFieldData.checkoutTime);
             stations.set(station.id, station);
         }
     }
