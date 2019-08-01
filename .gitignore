@@ -99,5 +99,9 @@ dist/*
 #config
 config/local*.json
 
+#storeData
+storeData/*
+!storeData/.gitkeep
+
 #testing
 .tmp

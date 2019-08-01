@@ -18,10 +18,15 @@ module.exports = merge(baseWebPackConfig, {
             {
                 from: buildpaths.config.path,
                 to: buildpaths.output.base
+            },
+            {
+                from: buildpaths.storeData.path,
+                to: buildpaths.output.base
             }
         ], {
             ignore: [
-                'local*'
+                'local*',
+                '.gitkeep'
             ],
             copyUnmodified: true
         })

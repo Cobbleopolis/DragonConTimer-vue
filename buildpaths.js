@@ -11,6 +11,8 @@ const commonSrc = path.resolve('.', 'common');
 
 const configPath = path.resolve('.', 'config', '*');
 
+const storeDataPath = path.resolve('.', 'storeData', '*');
+
 const outputBasePath = path.resolve('.', 'dist');
 const outputAssetPath = 'public';
 const outputConfigPath = path.join(outputBasePath, path.basename(configPath));
@@ -50,6 +52,9 @@ const paths = {
     },
     config: {
         path: configPath
+    },
+    storeData: {
+        path: storeDataPath
     },
     output: {
         base: outputBasePath,
