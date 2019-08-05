@@ -84,8 +84,8 @@
                     else
                         return state.consoles[this.currentConsole].games.sort().map(g => {
                             return {
-                                value: g,
-                                text: g
+                                value: g.name,
+                                text: g.name
                             }
                         })
                 }
