@@ -11,9 +11,7 @@ export default class Station {
         this.playerName = playerName || '';
         this.currentConsole = currentConsole || '';
         this.currentGame = currentGame || '';
-        this.checkoutTime = moment(checkoutTime ? checkoutTime : moment.now());
-        if(!this.checkoutTime.isValid)
-            moment.now();
+        this.checkoutTime = checkoutTime ? moment(checkoutTime) : null;
     }
 
 };

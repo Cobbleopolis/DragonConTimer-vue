@@ -28,7 +28,8 @@ export default {
             actions: {
                 title: 'Actions',
                 setFields: 'Set Fields',
-                setState: 'Set State'
+                setState: 'Set State',
+                clearTime: 'Clear Time'
             },
             fields: {
                 playerName: {

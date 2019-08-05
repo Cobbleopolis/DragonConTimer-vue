@@ -20,6 +20,11 @@ export default (server) => {
             io.emit(SocketEvents.Stations.UPDATE_STATION_FIELDS, updateFieldData)
         });
 
+        socket.on(SocketEvents.Stations.CLEAR_TIME, (stationIdData) => {
+            stationStore.clearTime(stationIdData)
+            io.emit(SocketEvents.Stations.CLEAR_TIME, stationIdData);
+        })
+
         socket.on('disconnect', () => {
             logger.debug("User Disconnected!")
         });
