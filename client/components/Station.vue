@@ -56,6 +56,9 @@
                         <b-dropdown-item-button>
                             {{ $t('stations.actions.setState') }}
                         </b-dropdown-item-button>
+                        <b-dropdown-item-button @click="clearTime">
+                            {{ $t('stations.actions.clearTime') }}
+                        </b-dropdown-item-button>
                     </b-dropdown>
                 </div>
             </b-form>
@@ -69,6 +72,7 @@
     import moment from 'moment'
     import timeUtils from '../util/timeUtils'
     import {mapGetters} from 'vuex'
+    import SocketEvents from '../../common/ref/SocketEvents'
 
     export default {
         components: {StationSetFields},
@@ -112,12 +116,16 @@
                 this.$refs.setFieldsModal.show()
             },
             getTimeFromNow() {
-                this.timeSinceCheckout = timeUtils.formatDurationFormat(moment.duration(moment(moment.now()).diff(this.station.checkoutTime)))
+                this.timeSinceCheckout =
+                    this.station.checkoutTime ? timeUtils.formatDurationFormat(moment.duration(moment(moment.now()).diff(this.station.checkoutTime))) : null
             },
             getConsoleName(event, value) {
                 if (!value || !this.getConsoleById(value))
                     return ''
                 return this.getConsoleById(value).name
+            },
+            clearTime() {
+                this.$socket.emit(SocketEvents.Stations.CLEAR_TIME, {id: this.station.id})
             },
             ...mapGetters('consoles', {
                 getConsoleById: 'getById'

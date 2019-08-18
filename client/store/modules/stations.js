@@ -13,6 +13,9 @@ const getters = {
 const actions = {
     [StoreConstants.Stations.UPDATE_STATION_FIELDS]({commit}) {
         commit(StoreConstants.Stations.UPDATE_STATION_FIELDS)
+    },
+    [StoreConstants.Stations.CLEAR_TIME]({commit}) {
+        commit(StoreConstants.Stations.CLEAR_TIME)
     }
 };
 
@@ -48,6 +51,15 @@ const mutations = {
                 existingStation.station.currentConsole = updateFieldsData.currentConsole;
                 existingStation.station.currentGame = updateFieldsData.currentGame;
                 existingStation.station.checkoutTime = moment(updateFieldsData.checkoutTime);
+                state.stations.splice(existingStation.index, 1, existingStation.station)
+            }
+        }
+    },
+    [StoreConstants.Stations.CLEAR_TIME](state, clearTimeData) {
+        if (clearTimeData) {
+            const existingStation = findExistingStation(state.stations, clearTimeData);
+            if (existingStation) {
+                existingStation.station.checkoutTime = null
                 state.stations.splice(existingStation.index, 1, existingStation.station)
             }
         }

@@ -52,6 +52,7 @@
 </template>
 
 <script>
+    import moment from 'moment'
     import {mapState} from 'vuex'
     import SocketEvents from '../../../common/ref/SocketEvents'
     import timeUtils from '../../util/timeUtils'
@@ -65,7 +66,7 @@
                 currentConsole: this.station.currentConsole,
                 currentGame: this.station.currentGame,
                 overrideTime: false,
-                currentTime: timeUtils.dateTimeFormat(this.station.checkoutTime)
+                currentTime: timeUtils.dateTimeFormat(this.station.checkoutTime ? this.station.checkoutTime : moment(moment.now()))
             }
         },
         computed: {
@@ -84,8 +85,8 @@
                     else
                         return state.consoles[this.currentConsole].games.sort().map(g => {
                             return {
-                                value: g,
-                                text: g
+                                value: g.name,
+                                text: g.name
                             }
                         })
                 }
@@ -100,7 +101,7 @@
                 this.playerName = this.station.playerName
                 this.currentConsole = this.station.currentConsole
                 this.currentGame = this.station.currentGame
-                this.currentTime = timeUtils.dateTimeFormat(this.station.checkoutTime)
+                this.currentTime = timeUtils.dateTimeFormat(moment(moment.now()))
             },
             hide() {
                 this.$refs.setFields.hide()
