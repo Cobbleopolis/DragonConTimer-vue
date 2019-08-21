@@ -63,9 +63,6 @@
         name: 'station-set-fields',
         props: ['station'],
         mixins: [StationStatusMixin],
-        created() {
-            console.log(this.StationStatus)
-        },
         data() {
             return {
                 playerName: this.station.playerName,
@@ -110,6 +107,8 @@
                 this.currentConsole = this.station.currentConsole
                 this.currentGame = this.station.currentGame
                 this.currentTime = timeUtils.dateTimeFormat(moment(moment.now()))
+                if(this.station.consoleOptions.length === 1)
+                    this.currentConsole = this.station.consoleOptions[0]
             },
             hide() {
                 this.$refs.setFields.hide()

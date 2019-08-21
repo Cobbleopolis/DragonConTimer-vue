@@ -4,12 +4,7 @@
         <div class="container-fluid">
             <div class="row mb-1">
                 <div class="col-12">
-
-                </div>
-            </div>
-            <div class="row mb-1" v-if="this.$nodeEnv === 'production'">
-                <div class="col-12">
-                    <p class="card-text">{{ station }}</p>
+                    <p v-html="$t('stations.availableConsoles', {consoleOptions: consoleOptions.join(', ')})"></p>
                 </div>
             </div>
             <div class="row mb-1" v-if="station.status === StationStatus.CHECKED_OUT">
@@ -124,6 +119,11 @@
                 },
                 set(newValue) {
                 }
+            },
+            consoleOptions() {
+                return this.station.consoleOptions.map(consoleId => {
+                    return this.getConsoleById()(consoleId).name
+                })
             }
         },
         methods: {
@@ -170,11 +170,6 @@
             getTimeFromNow() {
                 this.timeSinceCheckout =
                     this.station.checkoutTime ? timeUtils.formatDurationFormat(moment.duration(moment(moment.now()).diff(this.station.checkoutTime))) : null
-            },
-            getConsoleName(event, value) {
-                if (!value || !this.getConsoleById(value))
-                    return ''
-                return this.getConsoleById(value).name
             },
             clearTime() {
                 this.$socket.emit(SocketEvents.Stations.CLEAR_TIME, {id: this.station.id})

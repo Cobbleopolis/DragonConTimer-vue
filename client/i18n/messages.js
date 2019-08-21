@@ -39,6 +39,7 @@ export default {
                 checkedOut: "Checked Out",
                 notAvailable: "Not Available"
             },
+            availableConsoles: "Available Consoles: <span class=\"font-weight-bold\">{consoleOptions}</span>",
             fields: {
                 playerName: {
                     label: 'Name',
