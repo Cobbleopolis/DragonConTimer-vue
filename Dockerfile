@@ -1,5 +1,6 @@
 FROM node:8-alpine
 LABEL MAINTAINER="Cobbleopolis <cobbleopolis@gmail.com>"
+HEALTHCHECK --interval=1m --timeout=5s CMD wget --quiet --tries=1 --spider http://localhost:9000/alive || exit 1
 ADD --chown=node:node dist /home/node/
 USER node
 WORKDIR /home/node
