@@ -20,6 +20,11 @@ export default (server) => {
             io.emit(SocketEvents.Stations.UPDATE_STATION_FIELDS, updateFieldData)
         });
 
+        socket.on(SocketEvents.Stations.UPDATE_STATION_STATUS, (updateStatusData) => {
+            stationStore.updateStatus(updateStatusData)
+            io.emit(SocketEvents.Stations.UPDATE_STATION_STATUS, updateStatusData)
+        })
+
         socket.on(SocketEvents.Stations.CLEAR_TIME, (stationIdData) => {
             stationStore.clearTime(stationIdData)
             io.emit(SocketEvents.Stations.CLEAR_TIME, stationIdData);

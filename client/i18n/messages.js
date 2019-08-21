@@ -28,7 +28,8 @@ export default {
             actions: {
                 title: 'Actions',
                 setFields: 'Set Fields',
-                setState: 'Set State',
+                checkOut: 'Check Out',
+                checkIn: 'Check In/Return',
                 clearTime: 'Clear Time'
             },
             fields: {

@@ -46,6 +46,18 @@ function updateFields(updateFieldData) {
     }
 }
 
+function updateStatus(updateStatusData) {
+    logger.debug('Updating status: ' + JSON.stringify(updateStatusData))
+    if (updateStatusData) {
+        let station = stations.get(updateStatusData.id)
+        if (station) {
+            station.status = updateStatusData.status
+            stations.set(station.id, station)
+        }
+        StoreUtils.updateStoreFile(storeDataFileName, Array.from(stations.values()))
+    }
+}
+
 function clearTime(stationIdData) {
     logger.debug('Clearing Time: ' + JSON.stringify(stationIdData))
     let station = stations.get(stationIdData.id)
@@ -60,5 +72,6 @@ export default {
     init,
     getStations,
     updateFields,
+    updateStatus,
     clearTime
 }

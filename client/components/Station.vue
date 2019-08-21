@@ -1,13 +1,13 @@
 <template>
     <b-card :header="station.stationName" header-tag="h6" class="mb-3" :border-variant="borderVariant"
-            :header-border-variant="borderVariant">
+            :header-border-variant="borderVariant" :header-bg-variant="borderVariant">
         <div class="container-fluid">
-            <div class="row mb-1">
+            <div class="row mb-1" v-if="this.$nodeEnv === 'development'">
                 <div class="col-12">
                     <p class="card-text">{{ station }}</p>
                 </div>
             </div>
-            <div class="row mb-1">
+            <div class="row mb-1" v-if="station.status === StationStatus.CHECKED_OUT">
                 <div class="col-12">
                     <p>{{$t('stations.fields.timeSinceCheckout.label')}}: <span v-if="timeSinceCheckout">{{timeSinceCheckout}}</span><span
                             v-else>{{$t('data.invalidDuration')}}</span></p>
@@ -50,11 +50,14 @@
                 </b-form-group>
                 <div class="col-auto">
                     <b-dropdown :text="$t('stations.actions.title')" class="float-right" variant="primary">
+                        <b-dropdown-item-button @click="showCheckOut">
+                            {{ $t('stations.actions.checkOut') }}
+                        </b-dropdown-item-button>
+                        <b-dropdown-item-button @click="checkIn">
+                            {{ $t('stations.actions.checkIn') }}
+                        </b-dropdown-item-button>
                         <b-dropdown-item-button @click="showSetFields">
                             {{ $t('stations.actions.setFields') }}
-                        </b-dropdown-item-button>
-                        <b-dropdown-item-button>
-                            {{ $t('stations.actions.setState') }}
                         </b-dropdown-item-button>
                         <b-dropdown-item-button @click="clearTime">
                             {{ $t('stations.actions.clearTime') }}
@@ -73,12 +76,15 @@
     import timeUtils from '../util/timeUtils'
     import {mapGetters} from 'vuex'
     import SocketEvents from '../../common/ref/SocketEvents'
+    import StationStatusMixin from '../mixins/StationStatusMixin'
 
     export default {
         components: {StationSetFields},
         name: 'station',
         props: ['station'],
+        mixins: [StationStatusMixin],
         created() {
+            // console.log(this.StationStatus)
             this.getTimeFromNow()
             setInterval(this.getTimeFromNow, 1000)
         },
@@ -93,8 +99,11 @@
         computed: {
             borderVariant() {
                 switch (this.station.status) {
-                    case 'DEFAULT':
+                    case this.StationStatus.DEFAULT:
                         return 'default'
+                        break
+                    case this.StationStatus.CHECKED_OUT:
+                        return 'success'
                         break
                     default:
                         return 'default'
@@ -114,6 +123,22 @@
         methods: {
             showSetFields() {
                 this.$refs.setFieldsModal.show()
+            },
+            showCheckOut() {
+                this.$refs.setFieldsModal.show(this.StationStatus.CHECKED_OUT)
+            },
+            checkIn() {
+                this.$socket.emit(SocketEvents.Stations.UPDATE_STATION_FIELDS, {
+                    id: this.station.id,
+                    playerName: "",
+                    currentConsole: "",
+                    currentGame: ""
+                })
+                this.$socket.emit(SocketEvents.Stations.UPDATE_STATION_STATUS, {
+                    id: this.station.id,
+                    status: this.StationStatus.DEFAULT
+                })
+                this.clearTime()
             },
             getTimeFromNow() {
                 this.timeSinceCheckout =

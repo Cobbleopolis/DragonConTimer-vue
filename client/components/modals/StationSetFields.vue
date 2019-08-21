@@ -31,7 +31,8 @@
                                :options="currentGameOptions"
                                v-model="currentGame"></b-form-select>
             </b-form-group>
-            <b-form-checkbox name="overrideCheckoutTimeEnable" v-model="overrideTime" switch>
+            <b-form-checkbox name="overrideCheckoutTimeEnable" v-model="overrideTime" switch
+                             v-if="overrideStatus !== StationStatus.CHECKED_OUT">
                 {{$t('stations.fields.overrideCheckoutTimeEnable.label')}}
             </b-form-checkbox>
             <b-form-group id="checkoutTimeGroup"
@@ -56,17 +57,23 @@
     import {mapState} from 'vuex'
     import SocketEvents from '../../../common/ref/SocketEvents'
     import timeUtils from '../../util/timeUtils'
+    import StationStatusMixin from '../../mixins/StationStatusMixin'
 
     export default {
         name: 'station-set-fields',
         props: ['station'],
+        mixins: [StationStatusMixin],
+        created() {
+            console.log(this.StationStatus)
+        },
         data() {
             return {
                 playerName: this.station.playerName,
                 currentConsole: this.station.currentConsole,
                 currentGame: this.station.currentGame,
                 overrideTime: false,
-                currentTime: timeUtils.dateTimeFormat(this.station.checkoutTime ? this.station.checkoutTime : moment(moment.now()))
+                currentTime: timeUtils.dateTimeFormat(this.station.checkoutTime ? this.station.checkoutTime : moment(moment.now())),
+                overrideStatus: null
             }
         },
         computed: {
@@ -93,9 +100,10 @@
             })
         },
         methods: {
-            show() {
+            show(overrideStatus) {
                 this.onShow()
                 this.$refs.setFields.show()
+                this.overrideStatus = overrideStatus
             },
             onShow() {
                 this.playerName = this.station.playerName
@@ -105,7 +113,8 @@
             },
             hide() {
                 this.$refs.setFields.hide()
-                this.overrideTime = false;
+                this.overrideTime = false
+                this.overrideStatus = null
             },
             handleOk(e) {
                 e.cancel()
@@ -118,8 +127,14 @@
                     playerName: this.playerName,
                     currentConsole: this.currentConsole,
                     currentGame: this.currentGame,
-                    checkoutTime: this.currentTime
+                    checkoutTime: (this.overrideStatus === this.StationStatus.CHECKED_OUT) ? moment(moment.now()) : this.currentTime
                 })
+                if (this.overrideStatus) {
+                    this.$socket.emit(SocketEvents.Stations.UPDATE_STATION_STATUS, {
+                        id: this.station.id,
+                        status: this.overrideStatus
+                    })
+                }
                 this.hide()
             }
         }

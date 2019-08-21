@@ -1,3 +1,5 @@
 export default {
-    DEFAULT: 'DEFAULT'
+    DEFAULT: 'DEFAULT',
+    CHECKED_OUT: 'CHECKED_OUT',
+    NOT_AVAILABLE: 'NOT_AVAILABLE'
 };
