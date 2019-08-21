@@ -23,9 +23,14 @@ function gracefulShutdown() {
     winston.info('Shutting down server...');
     server.close(() => {
         winston.info('Server shut down.');
-        process.exit();
+        process.exit(0);
     });
+    setTimeout(() => {
+        winston.info('Server shut down (timeout).');
+        process.exit(0);
+    }, 2500)
 }
 
+process.on('exit', gracefulShutdown);
 process.on('SIGINT', gracefulShutdown);
 process.on('SIGTERM', gracefulShutdown);

@@ -1,37 +1,18 @@
-import fs from 'fs'
-import path from 'path'
-import config from 'config'
-import winston from 'winston';
-import expressWinston from 'express-winston';
-
-const logFolder = path.resolve('.', config.get('logFolder'));
+import winston from 'winston'
 
 export function init(app) {
-    if (!fs.existsSync(logFolder))
-        fs.mkdirSync(logFolder);
     winston.configure({
         transports: [
             new (winston.transports.Console)({
                 prettyPrint: true,
                 colorize: true,
                 json: false
-            }),
-            new (winston.transports.File)({
-                name: 'general-log-file',
-                filename: path.join(logFolder, 'dcTimer.log'),
-                json: false
-            }),
-            new (winston.transports.File)({
-                name: 'debug-log-file',
-                filename: path.join(logFolder, 'debug.log'),
-                level: 'debug',
-                json: false
             })
         ],
         levels: winston.config.syslog.levels,
         format: winston.format.simple()
-    });
-    winston.addColors(winston.config.syslog.colors);
+    })
+    winston.addColors(winston.config.syslog.colors)
     // app.use(expressWinston.logger({
     //     transports: [
     //         new winston.transports.Console({

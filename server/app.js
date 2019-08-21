@@ -9,4 +9,8 @@ app.get('/', (req, res) => {
     res.sendFile(path.resolve('.', 'index.html'))
 });
 
+app.get('/alive', (req, res) => {
+    res.status(200).json({status:"ok"});
+});
+
 export default app;

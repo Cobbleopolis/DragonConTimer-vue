@@ -22,6 +22,14 @@ module.exports = merge(baseWebPackConfig, {
             {
                 from: buildpaths.storeData.path,
                 to: buildpaths.output.base
+            },
+            {
+                from: buildpaths.productionConf.path,
+                to: buildpaths.output.productionConfPath
+            },
+            {
+                from: buildpaths.packageDetail.path,
+                to: buildpaths.output.packageDetailPath
             }
         ], {
             ignore: [
