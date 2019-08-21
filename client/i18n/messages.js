@@ -30,7 +30,14 @@ export default {
                 setFields: 'Set Fields',
                 checkOut: 'Check Out',
                 checkIn: 'Check In/Return',
+                toggleNotAvailable: 'Toggle @:stations.status.notAvailable',
                 clearTime: 'Clear Time'
+            },
+            header: "{stationName} ({stationStatus})",
+            status: {
+                default: "Available",
+                checkedOut: "Checked Out",
+                notAvailable: "Not Available"
             },
             fields: {
                 playerName: {

@@ -1,8 +1,13 @@
 <template>
-    <b-card :header="station.stationName" header-tag="h6" class="mb-3" :border-variant="borderVariant"
+    <b-card :header="$t('stations.header', {stationName: station.stationName, stationStatus: getLoaclizedStationStatus(station.status)})" header-tag="h6" class="mb-3" :border-variant="borderVariant"
             :header-border-variant="borderVariant" :header-bg-variant="borderVariant">
         <div class="container-fluid">
-            <div class="row mb-1" v-if="this.$nodeEnv === 'development'">
+            <div class="row mb-1">
+                <div class="col-12">
+
+                </div>
+            </div>
+            <div class="row mb-1" v-if="this.$nodeEnv === 'production'">
                 <div class="col-12">
                     <p class="card-text">{{ station }}</p>
                 </div>
@@ -59,6 +64,9 @@
                         <b-dropdown-item-button @click="showSetFields">
                             {{ $t('stations.actions.setFields') }}
                         </b-dropdown-item-button>
+                        <b-dropdown-item-button @click="toggleNotAvailable">
+                            {{ $t('stations.actions.toggleNotAvailable') }}
+                        </b-dropdown-item-button>
                         <b-dropdown-item-button @click="clearTime">
                             {{ $t('stations.actions.clearTime') }}
                         </b-dropdown-item-button>
@@ -84,7 +92,6 @@
         props: ['station'],
         mixins: [StationStatusMixin],
         created() {
-            // console.log(this.StationStatus)
             this.getTimeFromNow()
             setInterval(this.getTimeFromNow, 1000)
         },
@@ -101,13 +108,12 @@
                 switch (this.station.status) {
                     case this.StationStatus.DEFAULT:
                         return 'default'
-                        break
                     case this.StationStatus.CHECKED_OUT:
                         return 'success'
-                        break
+                    case this.StationStatus.NOT_AVAILABLE:
+                        return 'secondary'
                     default:
                         return 'default'
-                        break
                 }
             },
             fullConsoleName: {
@@ -139,6 +145,27 @@
                     status: this.StationStatus.DEFAULT
                 })
                 this.clearTime()
+            },
+            toggleNotAvailable() {
+                if (this.station.status === this.StationStatus.NOT_AVAILABLE)
+                    if ((this.station.playerName && this.station.playerName.length > 0) ||
+                        (this.station.currentConsole && this.station.currentConsole.length > 0) ||
+                        (this.station.currentGame && this.station.currentGame.length > 0) ||
+                        this.station.checkoutTime)
+                        this.$socket.emit(SocketEvents.Stations.UPDATE_STATION_STATUS, {
+                            id: this.station.id,
+                            status: this.StationStatus.CHECKED_OUT
+                        })
+                    else
+                        this.$socket.emit(SocketEvents.Stations.UPDATE_STATION_STATUS, {
+                            id: this.station.id,
+                            status: this.StationStatus.DEFAULT
+                        })
+                else
+                    this.$socket.emit(SocketEvents.Stations.UPDATE_STATION_STATUS, {
+                        id: this.station.id,
+                        status: this.StationStatus.NOT_AVAILABLE
+                    })
             },
             getTimeFromNow() {
                 this.timeSinceCheckout =
