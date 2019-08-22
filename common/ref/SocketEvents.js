@@ -1,4 +1,7 @@
 const SocketEvents = {
+    CoreInfo: {
+        SEND_CORE_INFO: 'SEND_CORE_INFO'
+    },
     Stations: {
         ADD_STATION: 'ADD_STATION',
         UPDATE_STATION_FIELDS: 'UPDATE_STATION_FIELDS',

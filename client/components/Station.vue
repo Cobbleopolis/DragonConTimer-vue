@@ -95,7 +95,8 @@
         },
         data() {
             return {
-                timeSinceCheckout: null
+                timeSinceCheckout: null,
+                timeSinceCheckoutDuration: null
             }
         },
         computed: {
@@ -104,7 +105,14 @@
                     case this.StationStatus.DEFAULT:
                         return 'default'
                     case this.StationStatus.CHECKED_OUT:
-                        return 'success'
+                        if (!this.timeSinceCheckoutDuration)
+                            return 'success'
+                        if (this.timeSinceCheckoutDuration.asMilliseconds() <= this.$store.state.times.warning.asMilliseconds())
+                            return 'success'
+                        else if (this.timeSinceCheckoutDuration.asMilliseconds() <= this.$store.state.times.kickOff.asMilliseconds())
+                            return 'warning'
+                        else
+                            return 'danger'
                     case this.StationStatus.NOT_AVAILABLE:
                         return 'secondary'
                     default:
@@ -168,8 +176,9 @@
                     })
             },
             getTimeFromNow() {
+                this.timeSinceCheckoutDuration = moment.duration(moment(moment.now()).diff(this.station.checkoutTime))
                 this.timeSinceCheckout =
-                    this.station.checkoutTime ? timeUtils.formatDurationFormat(moment.duration(moment(moment.now()).diff(this.station.checkoutTime))) : null
+                    this.station.checkoutTime ? timeUtils.formatDurationFormat(this.timeSinceCheckoutDuration) : null
             },
             clearTime() {
                 this.$socket.emit(SocketEvents.Stations.CLEAR_TIME, {id: this.station.id})
