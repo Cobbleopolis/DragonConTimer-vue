@@ -55,6 +55,15 @@ const mutations = {
             }
         }
     },
+    [StoreConstants.Stations.UPDATE_STATION_STATUS](state, updateStatusData) {
+        if (updateStatusData) {
+            const existingStation = findExistingStation(state.stations, updateStatusData);
+            if (updateStatusData) {
+                existingStation.station.status = updateStatusData.status;
+                state.stations.splice(existingStation.index, 1, existingStation.station);
+            }
+        }
+    },
     [StoreConstants.Stations.CLEAR_TIME](state, clearTimeData) {
         if (clearTimeData) {
             const existingStation = findExistingStation(state.stations, clearTimeData);

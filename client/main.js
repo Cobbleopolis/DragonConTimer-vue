@@ -3,9 +3,9 @@ import App from './App.vue'
 import router from './router'
 import i18n from './i18n'
 import store from './store'
+import nodeEnvPlugin from './nodeEnvPlugin'
 import BootstrapVue from 'bootstrap-vue'
 import VueSocketIO from 'vue-socket.io'
-import StoreConstants from './store/StoreConstants'
 
 Vue.use(BootstrapVue);
 Vue.use(new VueSocketIO({
@@ -17,8 +17,7 @@ Vue.use(new VueSocketIO({
         mutationPrefix: 'SOCKET_'
     }
 }));
-
-console.log(StoreConstants.Stations.ADD_STATION)
+Vue.use(nodeEnvPlugin);
 
 Vue.config.productionTip = false;
 Vue.config.fallbackLang = 'en';

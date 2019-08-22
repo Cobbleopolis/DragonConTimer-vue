@@ -28,9 +28,18 @@ export default {
             actions: {
                 title: 'Actions',
                 setFields: 'Set Fields',
-                setState: 'Set State',
+                checkOut: 'Check Out',
+                checkIn: 'Check In/Return',
+                toggleNotAvailable: 'Toggle @:stations.status.notAvailable',
                 clearTime: 'Clear Time'
             },
+            header: "{stationName} ({stationStatus})",
+            status: {
+                default: "Available",
+                checkedOut: "Checked Out",
+                notAvailable: "Not Available"
+            },
+            availableConsoles: "Available Consoles: <span class=\"font-weight-bold\">{consoleOptions}</span>",
             fields: {
                 playerName: {
                     label: 'Name',

@@ -1,5 +1,9 @@
 {
   "storeDataDir": "./storeData",
+  "times": {
+    "warning": "0:45",
+    "kickOff": "1:00"
+  },
   "consoles": [
 
   ]
