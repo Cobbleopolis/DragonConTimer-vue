@@ -3,7 +3,7 @@
         <b-card-body>
             <b-card-text>{{$t('availability.consoles.total', {count: stationsWithConsole.length})}}</b-card-text>
             <b-card-text v-if="stationsWithConsoleStatus(StationStatus.DEFAULT).length > 0">{{$t('availability.consoles.available', {count: stationsWithConsoleStatus(StationStatus.DEFAULT).length})}}</b-card-text>
-            <b-card-text v-else>{{$t('availability.consoles.timeUntil', {time: timeToNextConsole})}}</b-card-text>
+            <b-card-text v-else>{{$t('availability.consoles.availableIn', {time: timeToNextConsole})}}</b-card-text>
             <b-card-text v-if="outOfTimeStations.length > 0">{{$t('availability.consoles.needToBeKicked', {stations: outOfTimeStations})}}</b-card-text>
         </b-card-body>
         <b-list-group flush v-for="game in console.games">
@@ -45,7 +45,7 @@
             stationsWithConsole() {
                 return this.getStationByConsoleOptions()(this.console.id)
             },
-            ...mapState('stations', ['stations']),
+            // ...mapState('stations', ['stations']),
             ...mapState(['times'])
         },
         methods: {

@@ -7,7 +7,7 @@ export default {
     methods: {
         ...mapGetters('stations', ['stations']),
         getOutOfTimeStations() {
-            return this.stations.filter(station =>
+            return this.stations().filter(station =>
                 station.timeSinceCheckout() &&
                 station.timeSinceCheckout().asMilliseconds() >= this.times.kickOff.asMilliseconds()
             )

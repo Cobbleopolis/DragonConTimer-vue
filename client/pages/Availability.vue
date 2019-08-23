@@ -1,6 +1,5 @@
 <template>
     <div>
-        <code>{{JSON.stringify(consoles)}}</code>
         <template v-for="console in consoles">
             <console-availability v-bind:console="console"/>
         </template>
@@ -8,7 +7,7 @@
 </template>
 
 <script>
-    import {mapState, mapGetters} from 'vuex';
+    import {mapState} from 'vuex';
     import ConsoleAvailability from '../components/availability/ConsoleAvailability'
 
     export default {

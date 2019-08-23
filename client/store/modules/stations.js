@@ -14,6 +14,9 @@ const getters = {
     getStationByCurrentConsole: state => console => {
         return state.stations.filter(station => station.currentConsole === console)
     },
+    getStationsByGame: state => (console, game) => {
+        return state.stations.filter(station => station.currentConsole === console && station.currentGame === game)
+    },
     getOutOfTimeStations: (state, getters, rootState) => {
         return state.stations.filter(station => station.timeSinceCheckout() && station.timeSinceCheckout().asMilliseconds() >= rootState.times.kickOff.asMilliseconds())
     }
