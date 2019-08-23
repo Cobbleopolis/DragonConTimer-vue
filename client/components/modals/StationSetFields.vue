@@ -109,6 +109,8 @@
                 this.currentTime = timeUtils.dateTimeFormat(moment(moment.now()))
                 if (this.station.consoleOptions.length === 1)
                     this.currentConsole = this.station.consoleOptions[0]
+                if (this.currentConsole && this.currentConsole.length > 0 && this.currentGameOptions.length === 1)
+                    this.currentGame = this.currentGameOptions[0].value
             },
             hide() {
                 this.$refs.setFields.hide()
