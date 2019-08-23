@@ -5,7 +5,7 @@ export default {
         projectName: buildinfo.displayName,
         pageNames: {
             index: 'Main Page',
-            waitlist: 'Waitlist'
+            availability: 'Availability'
         },
         forms: {
             actions: {
@@ -70,6 +70,20 @@ export default {
             },
             setFields: {
                 title: 'Set Fields: {stationName}'
+            }
+        },
+        availability: {
+            consoles: {
+                total: 'Total Consoles: {count}',
+                available: 'Available: {count}',
+                availableIn: 'Available in: {time}',
+                needToBeKicked: 'Stations that need to be kicked: {stations}'
+            },
+            games: {
+                total: 'Total Copies: {count}',
+                available: '@:availability.consoles.available',
+                availableIn: '@:availability.consoles.availableIn',
+                needToBeKicked: '@:availability.consoles.needToBeKicked'
             }
         }
     }

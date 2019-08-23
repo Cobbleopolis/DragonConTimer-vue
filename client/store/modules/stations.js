@@ -7,8 +7,20 @@ const state = {
 };
 
 const getters = {
-    stations: state => state.stations
-};
+    stations: state => state.stations,
+    getStationByConsoleOptions: state => consoleOption => {
+        return state.stations.filter(station => station.consoleOptions.includes(consoleOption))
+    },
+    getStationByCurrentConsole: state => console => {
+        return state.stations.filter(station => station.currentConsole === console)
+    },
+    getStationsByGame: state => (console, game) => {
+        return state.stations.filter(station => station.currentConsole === console && station.currentGame === game)
+    },
+    getOutOfTimeStations: (state, getters, rootState) => {
+        return state.stations.filter(station => station.timeSinceCheckout() && station.timeSinceCheckout().asMilliseconds() >= rootState.times.kickOff.asMilliseconds())
+    }
+}
 
 const actions = {
     [StoreConstants.Stations.UPDATE_STATION_FIELDS]({commit}) {

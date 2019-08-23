@@ -24,7 +24,7 @@ const mutations = {
                 consoleObj.name,
                 consoleObj.games
             );
-            state.consoles[console.id] = console;
+            state.consoles = {...state.consoles, [console.id]: console}
         }
         if (Array.isArray(payload))
             payload.forEach(addConsole)
