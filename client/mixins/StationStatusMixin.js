@@ -5,7 +5,7 @@ export default {
         this.StationStatus = StationStatus
     },
     methods: {
-        getLoaclizedStationStatus(status) {
+        getLocalizedStationStatus(status) {
             switch (status) {
                 case this.StationStatus.DEFAULT:
                     return this.$t('stations.status.default')

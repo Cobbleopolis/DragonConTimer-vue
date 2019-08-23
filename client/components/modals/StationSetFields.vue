@@ -87,12 +87,12 @@
                     if (!this.currentConsole || !state.consoles[this.currentConsole])
                         return {}
                     else
-                        return state.consoles[this.currentConsole].games.sort().map(g => {
-                            return {
-                                value: g.name,
-                                text: g.name
-                            }
-                        })
+                        return state.consoles[this.currentConsole].games.map(g => {
+                                return {
+                                    value: g.name,
+                                    text: g.name
+                                }
+                            })
                 }
             })
         },
@@ -107,7 +107,7 @@
                 this.currentConsole = this.station.currentConsole
                 this.currentGame = this.station.currentGame
                 this.currentTime = timeUtils.dateTimeFormat(moment(moment.now()))
-                if(this.station.consoleOptions.length === 1)
+                if (this.station.consoleOptions.length === 1)
                     this.currentConsole = this.station.consoleOptions[0]
             },
             hide() {

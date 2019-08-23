@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '../pages/Index.vue'
-import Waitlist from '../pages/Waitlist.vue'
+import Availability from '../pages/Availability.vue'
 
 Vue.use(Router);
 
@@ -11,12 +11,12 @@ export default new Router({
         {
             path: '/',
             name: 'index',
-            component: Index
+            component: Availability //TODO Swap these back
         },
         {
-            path: '/waitlist',
-            name: 'waitlist',
-            component: Waitlist
+            path: '/availability',
+            name: 'availability',
+            component: Index
         }
     ]
 })

@@ -14,4 +14,8 @@ export default class Station {
         this.checkoutTime = checkoutTime ? moment(checkoutTime) : null;
     }
 
+    timeSinceCheckout() {
+        return this.checkoutTime ? moment.duration(moment(moment.now()).diff(this.checkoutTime)) : null
+    }
+
 };

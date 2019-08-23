@@ -1,5 +1,5 @@
 <template>
-    <b-card :header="$t('stations.header', {stationName: station.stationName, stationStatus: getLoaclizedStationStatus(station.status)})" header-tag="h6" class="mb-3" :border-variant="borderVariant"
+    <b-card :header="$t('stations.header', {stationName: station.stationName, stationStatus: getLocalizedStationStatus(station.status)})" header-tag="h6" class="mb-3" :border-variant="borderVariant"
             :header-border-variant="borderVariant" :header-bg-variant="borderVariant">
         <div class="container-fluid">
             <div class="row mb-1">
@@ -87,11 +87,11 @@
         props: ['station'],
         mixins: [StationStatusMixin],
         created() {
-            this.getTimeFromNow()
-            setInterval(this.getTimeFromNow, 1000)
+            this.getFormattedTimeFromNow()
+            setInterval(this.getFormattedTimeFromNow, 1000)
         },
         destroyed() {
-            clearInterval(this.getTimeFromNow)
+            clearInterval(this.getFormattedTimeFromNow)
         },
         data() {
             return {
@@ -105,11 +105,12 @@
                     case this.StationStatus.DEFAULT:
                         return 'default'
                     case this.StationStatus.CHECKED_OUT:
-                        if (!this.timeSinceCheckoutDuration)
+                        let timeSinceCheckout = this.station.timeSinceCheckout().asMilliseconds()
+                        if (!timeSinceCheckout)
                             return 'success'
-                        if (this.timeSinceCheckoutDuration.asMilliseconds() <= this.$store.state.times.warning.asMilliseconds())
+                        if (timeSinceCheckout <= this.$store.state.times.warning.asMilliseconds())
                             return 'success'
-                        else if (this.timeSinceCheckoutDuration.asMilliseconds() <= this.$store.state.times.kickOff.asMilliseconds())
+                        else if (timeSinceCheckout <= this.$store.state.times.kickOff.asMilliseconds())
                             return 'warning'
                         else
                             return 'danger'
@@ -175,10 +176,9 @@
                         status: this.StationStatus.NOT_AVAILABLE
                     })
             },
-            getTimeFromNow() {
-                this.timeSinceCheckoutDuration = moment.duration(moment(moment.now()).diff(this.station.checkoutTime))
+            getFormattedTimeFromNow() {
                 this.timeSinceCheckout =
-                    this.station.checkoutTime ? timeUtils.formatDurationFormat(this.timeSinceCheckoutDuration) : null
+                    this.station.checkoutTime ? timeUtils.formatDurationFormat(this.station.timeSinceCheckout()) : null
             },
             clearTime() {
                 this.$socket.emit(SocketEvents.Stations.CLEAR_TIME, {id: this.station.id})
