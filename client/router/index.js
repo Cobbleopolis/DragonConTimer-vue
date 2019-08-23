@@ -11,12 +11,12 @@ export default new Router({
         {
             path: '/',
             name: 'index',
-            component: Availability //TODO Swap these back
+            component: Index
         },
         {
             path: '/availability',
             name: 'availability',
-            component: Index
+            component: Availability
         }
     ]
 })
