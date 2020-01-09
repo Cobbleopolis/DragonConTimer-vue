@@ -6,7 +6,7 @@
             <b-card-text v-else>{{$t('availability.consoles.availableIn', {time: timeToNextConsole})}}</b-card-text>
             <b-card-text v-if="outOfTimeStations.length > 0">{{$t('availability.consoles.needToBeKicked', {stations: outOfTimeStations})}}</b-card-text>
         </b-card-body>
-        <b-list-group flush v-for="game in console.games">
+        <b-list-group flush v-for="game in console.games" v-bind:key="game.name">
             <b-list-group-item>
                 <game-availability :console-id="console.id" :game="game"></game-availability>
             </b-list-group-item>

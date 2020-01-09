@@ -4,7 +4,7 @@
         <div class="container-fluid">
             <div class="row mb-1">
                 <div class="col-12">
-                    <p v-html="$t('stations.availableConsoles', {consoleOptions: consoleOptions.join(', ')})"></p>
+                    <p v-html="$t('stations.availableConsoles', {consoleOptions: consoleOptions.join(', ')})"/>
                 </div>
             </div>
             <div class="row mb-1" v-if="station.status === StationStatus.CHECKED_OUT">
@@ -23,7 +23,7 @@
                                   id="playerNameInput"
                                   readonly
                                   v-model="station.playerName"
-                                  class="input-horizontal"></b-form-input>
+                                  class="input-horizontal"/>
                 </b-form-group>
                 <b-form-group id="currentConsoleInputGroup"
                               label-align="center"
@@ -34,7 +34,7 @@
                     <b-form-input type="text"
                                   id="currentConsoleInput"
                                   readonly
-                                  v-model="fullConsoleName"></b-form-input>
+                                  v-model="fullConsoleName"/>
                 </b-form-group>
                 <b-form-group id="currentGameInputGroup"
                               class="mr-auto"
@@ -46,7 +46,7 @@
                     <b-form-input type="text"
                                   id="currentGameInput"
                                   readonly
-                                  v-model="station.currentGame"></b-form-input>
+                                  v-model="station.currentGame"/>
                 </b-form-group>
                 <div class="col-auto">
                     <b-dropdown :text="$t('stations.actions.title')" class="float-right" variant="primary">
@@ -69,7 +69,7 @@
                 </div>
             </b-form>
         </div>
-        <station-set-fields ref="setFieldsModal" :station="station"></station-set-fields>
+        <station-set-fields ref="setFieldsModal" :station="station"/>
     </b-card>
 </template>
 
