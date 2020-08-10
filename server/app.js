@@ -9,7 +9,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.resolve('.', 'index.html'))
 });
 
-app.get('/available', (req, res) => {
+app.get('/availability', (req, res) => {
     res.sendFile(path.resolve('.', 'index.html'))
 })
 

@@ -1,50 +1,50 @@
 <template>
-    <b-card :header="$t('stations.header', {stationName: station.stationName, stationStatus: getLocalizedStationStatus(station.status)})" header-tag="h6" class="mb-3" :border-variant="borderVariant"
+    <b-card :header="$t('stations.header', {stationName: station.stationName, stationStatus: this.getLocalizedStationStatus(station.status)})" header-tag="h6" class="mb-3" :border-variant="borderVariant"
             :header-border-variant="borderVariant" :header-bg-variant="borderVariant">
         <div class="container-fluid">
             <div class="row mb-1">
                 <div class="col-12">
-                    <p v-html="$t('stations.availableConsoles', {consoleOptions: consoleOptions.join(', ')})"/>
+                    <p v-html="$t('stations.availableConsoles', {consoleOptions: this.consoleOptions.join(', ')})"/>
                 </div>
             </div>
-            <div class="row mb-1" v-if="station.status === StationStatus.CHECKED_OUT">
+            <div class="row mb-1" v-if="station.status === this.StationStatus.CHECKED_OUT">
                 <div class="col-12">
                     <p>{{$t('stations.fields.timeSinceCheckout.label')}}: <span v-if="timeSinceCheckout">{{timeSinceCheckout}}</span><span
                             v-else>{{$t('data.invalidDuration')}}</span></p>
                 </div>
             </div>
             <b-form inline class="row justify-content-between">
-                <b-form-group id="playerNameInputGroup"
-                              label-for="playerNameInput"
+                <b-form-group :id="'playerNameInputGroup' + station.id"
+                              :label-for="'playerNameInput' + station.id"
                               labelCols="auto"
                               labelClass="mr-2"
                               :label="$t('stations.fields.playerName.label')">
                     <b-form-input type="text"
-                                  id="playerNameInput"
+                                  :id="'playerNameInput' + station.id"
                                   readonly
                                   v-model="station.playerName"
                                   class="input-horizontal"/>
                 </b-form-group>
-                <b-form-group id="currentConsoleInputGroup"
+                <b-form-group :id="'currentConsoleInputGroup' + station.id"
                               label-align="center"
                               labelCols="auto"
                               labelClass="mx-2"
-                              label-for="currentConsoleInput"
+                              :label-for="'currentConsoleInput' + station.id"
                               :label="$t('stations.fields.currentConsole.label')">
                     <b-form-input type="text"
-                                  id="currentConsoleInput"
+                                  :id="'currentConsoleInput' + station.id"
                                   readonly
                                   v-model="fullConsoleName"/>
                 </b-form-group>
-                <b-form-group id="currentGameInputGroup"
+                <b-form-group :id="'currentGameInputGroup' + station.id"
                               class="mr-auto"
                               labelCols="auto"
                               labelClass="mx-2"
                               label-align="center"
-                              label-for="currentGameInput"
+                              :label-for="'currentGameInput' + station.id"
                               :label="$t('stations.fields.currentGame.label')">
                     <b-form-input type="text"
-                                  id="currentGameInput"
+                                  :id="'currentGameInput' + station.id"
                                   readonly
                                   v-model="station.currentGame"/>
                 </b-form-group>
@@ -75,7 +75,6 @@
 
 <script>
     import StationSetFields from './modals/StationSetFields.vue'
-    import moment from 'moment'
     import timeUtils from '../util/timeUtils'
     import {mapGetters} from 'vuex'
     import SocketEvents from '../../common/ref/SocketEvents'
