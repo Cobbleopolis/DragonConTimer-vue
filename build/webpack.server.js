@@ -1,11 +1,20 @@
-const webpack = require('webpack');
 const fs = require('fs');
+const webpack = require('webpack');
 
 const buildpaths = require('../buildpaths');
 
 const excludedNodeModules = ['.bin'];
 
 let bannerString = 'require(\'source-map-support\').install();';
+
+const Webpack5Replacement = (webpack.version && webpack.version[0] <= 4) ?
+    new webpack.NormalModuleReplacementPlugin( //Webpack 5 fix. If upgrading to webpack 5 make sure to remove this
+        /plugin-webpack5/,
+        (res) => {
+            if (res.context.includes('vue-loader'))
+                res.request = res.request.replace(/plugin-webpack5/g, 'plugin-webpack4')
+        }
+    ) : null;
 
 let nodeModules = {};
 fs.readdirSync('node_modules')
@@ -34,6 +43,7 @@ module.exports = {
     },
     externals: nodeModules,
     plugins: [
+        Webpack5Replacement,
         new webpack.BannerPlugin({
             banner: bannerString,
             raw: true,
