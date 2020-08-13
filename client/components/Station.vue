@@ -4,7 +4,7 @@
         <div class="container-fluid">
             <div class="row mb-1">
                 <div class="col-12">
-                    <p v-html="$t('stations.availableConsoles', {consoleOptions: this.consoleOptions.join(', ')})"/>
+                    <p v-html="$t('stations.availableConsoles.formatted', {consoleOptions: this.consoleOptions.join(', ')})"/>
                 </div>
             </div>
             <div class="row mb-1" v-if="station.status === this.StationStatus.CHECKED_OUT">
