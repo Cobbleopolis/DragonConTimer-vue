@@ -2,10 +2,11 @@
     <div>
         <b-row class="mb-2">
             <b-col cols="auto">
-                <b-button v-b-toggle.station-filter-sidebar>{{ $t('stations.filters.title') }}</b-button>
+                <b-button v-b-toggle.station-filter-sidebar variant="primary">{{ $t('stations.filters.title') }}
+                </b-button>
             </b-col>
             <b-col>
-                <b-button @click="resetFilters">{{ $t('stations.filters.reset') }}</b-button>
+                <b-button @click="resetFilters" variant="primary">{{ $t('stations.filters.reset') }}</b-button>
             </b-col>
         </b-row>
         <template v-for="station in this.filteredStations">
@@ -37,7 +38,7 @@
                     </b-form-checkbox-group>
                 </b-form-group>
 
-                <b-button @click="resetFilters">{{ $t('stations.filters.reset') }}</b-button>
+                <b-button @click="resetFilters" variant="primary">{{ $t('stations.filters.reset') }}</b-button>
             </b-container>
         </b-sidebar>
     </div>
