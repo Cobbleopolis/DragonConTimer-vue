@@ -84,14 +84,11 @@ export default {
         },
         availability: {
             consoles: {
-                total: 'Total Consoles: {count}',
-                available: 'Available: {count}',
+                available: 'Available: {count}/{total}',
                 availableIn: 'Available in: {time}',
                 needToBeKicked: 'Stations that need to be kicked: {stations}'
             },
             games: {
-                total: 'Total Copies: {count}',
-                available: '@:availability.consoles.available',
                 availableIn: '@:availability.consoles.availableIn',
                 needToBeKicked: '@:availability.consoles.needToBeKicked'
             }
