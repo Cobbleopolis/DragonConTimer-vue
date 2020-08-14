@@ -35,11 +35,15 @@ export default {
             },
             header: "{stationName} ({stationStatus})",
             status: {
+                title: 'Status',
                 default: "Available",
                 checkedOut: "Checked Out",
                 notAvailable: "Not Available"
             },
-            availableConsoles: "Available Consoles: <span class=\"font-weight-bold\">{consoleOptions}</span>",
+            availableConsoles: {
+                text: "Available Consoles",
+                formatted: "@:stations.availableConsoles.text: <span class=\"font-weight-bold\">{consoleOptions}</span>",
+            },
             fields: {
                 playerName: {
                     label: 'Name',
@@ -70,6 +74,12 @@ export default {
             },
             setFields: {
                 title: 'Set Fields: {stationName}'
+            },
+            filters: {
+                title: 'Filters',
+                reset: 'Reset Filters',
+                statusFilter: '@:stations.status.title',
+                consoleFilter: '@:stations.availableConsoles.text'
             }
         },
         availability: {
