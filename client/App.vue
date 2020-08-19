@@ -25,5 +25,5 @@
     @import 'styles/main'
 
     main
-        margin-top: $navbar-brand-height + ($navbar-padding-y * 2) + .5rem
+        margin-top: $navbar-total-height + .5rem
 </style>
