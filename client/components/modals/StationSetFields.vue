@@ -7,41 +7,49 @@
                  @shown="onShow">
 
             <b-form-group :id="'playerNameInputGroup' + station.id"
-                          label-for="playerNameInput"
+                          :label-for="'playerNameInput' + station.id"
                           :label="$t('stations.fields.playerName.label')"
                           :description="$t('stations.fields.playerName.description')">
                 <b-form-input type="text"
-                              id="playerNameInput"
+                              :id="'playerNameInput' + station.id"
                               :placeholder="$t('stations.fields.playerName.placeholder')"
-                              v-model="playerName"></b-form-input>
+                              v-model="playerName"/>
             </b-form-group>
             <b-form-group :id="'consoleSelectGroup' + station.id"
-                          label-for="consoleSelect"
+                          :label-for="'consoleSelectInput' + station.id"
                           :label="$t('stations.fields.currentConsole.label')"
                           :description="$t('stations.fields.currentConsole.description')">
-                <b-form-select :id="'consoleSelect' + station.id"
+                <b-form-select :id="'consoleSelectInput' + station.id"
                                :options="consoleOptions"
-                               v-model="currentConsole"></b-form-select>
+                               v-model="currentConsole"/>
             </b-form-group>
-            <b-form-group id="consoleGameGroup"
-                          label-for="currentGame"
+            <b-form-group :id="'consoleGameGroup' + station.id"
+                          :label-for="'currentGameInput' + station.id"
                           :label="$t('stations.fields.currentGame.label')"
                           :description="$t('stations.fields.currentGame.description')">
-                <b-form-select id="currentGame"
+                <b-form-select :id="'currentGameInput' + station.id"
                                :options="currentGameOptions"
-                               v-model="currentGame"></b-form-select>
+                               v-model="currentGame"/>
+            </b-form-group>
+            <b-form-group :id="'consoleNoteGroup' + station.id"
+                          :label-for="'consoleNotesInput' + station.id"
+                          :label="$t('stations.fields.notes.label')"
+                          :description="$t('stations.fields.notes.description')">
+                <b-form-textarea :id="'consoleNotesInput' + station.id"
+                                 :placeholder="$t('stations.fields.notes.placeholder')"
+                                 v-model="currentNotes"/>
             </b-form-group>
             <b-form-checkbox name="overrideCheckoutTimeEnable" v-model="overrideTime" switch
                              v-if="overrideStatus !== this.StationStatus.CHECKED_OUT">
                 {{ $t('stations.fields.overrideCheckoutTimeEnable.label') }}
             </b-form-checkbox>
             <b-form-group id="checkoutTimeGroup"
-                          label-for="checkoutTime"
+                          label-for="checkoutTimeInput"
                           :label="$t('stations.fields.checkoutTime.label')"
                           :description="$t('stations.fields.checkoutTime.description')"
                           v-if="overrideTime">
                 <b-form-input type="datetime-local"
-                              id="checkoutTime"
+                              id="checkoutTimeInput"
                               v-model="currentTime"/>
             </b-form-group>
             <template slot="modal-footer">
@@ -71,6 +79,7 @@ export default {
             playerName: this.station.playerName,
             currentConsole: this.station.currentConsole,
             currentGame: this.station.currentGame,
+            currentNotes: this.station.notes,
             overrideTime: false,
             currentTime: timeUtils.dateTimeFormat(this.station.checkoutTime ? this.station.checkoutTime : moment(moment.now())),
             overrideStatus: null
@@ -109,6 +118,7 @@ export default {
             this.playerName = this.station.playerName
             this.currentConsole = this.station.currentConsole
             this.currentGame = this.station.currentGame
+            this.currentNotes = this.station.notes
             this.currentTime = timeUtils.dateTimeFormat(moment(moment.now()))
             if (this.station.consoleOptions.length === 1)
                 this.currentConsole = this.station.consoleOptions[0]
@@ -128,6 +138,10 @@ export default {
                 currentConsole: this.currentConsole,
                 currentGame: this.currentGame,
                 checkoutTime: (this.overrideStatus === this.StationStatus.CHECKED_OUT) ? moment(moment.now()) : this.currentTime
+            })
+            this.$socket.emit(SocketEvents.Stations.EDIT_NOTES, {
+                id: this.station.id,
+                notes: this.currentNotes
             })
             if (this.overrideStatus) {
                 this.$socket.emit(SocketEvents.Stations.UPDATE_STATION_STATUS, {

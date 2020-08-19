@@ -70,6 +70,12 @@ export default {
                 checkoutTime: {
                     label: "Checkout Time",
                     description: "The time that the station was checked out. This is is your local time."
+                },
+                notes: {
+                    label: 'Notes',
+                    displayLabel: '@:stations.fields.notes.label: {notes}',
+                    placeholder: 'Write some notes',
+                    description: 'Any needed notes about the station'
                 }
             },
             setFields: {
