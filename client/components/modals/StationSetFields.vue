@@ -126,9 +126,11 @@ export default {
                 this.currentGame = this.currentGameOptions[0].value
         },
         hide() {
-            this.$refs.setFields.hide()
-            this.overrideTime = false
-            this.overrideStatus = null
+            this.$nextTick(() => {
+                this.$refs.setFields.hide()
+                this.overrideTime = false
+                this.overrideStatus = null
+            })
         },
         handleSubmit(e) {
             if (e) e.preventDefault()

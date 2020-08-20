@@ -30,6 +30,7 @@ export default {
                 setFields: 'Set Fields',
                 checkOut: 'Check Out',
                 checkIn: 'Check In/Return',
+                editNotes: 'Edit Notes',
                 toggleNotAvailable: 'Toggle @:stations.status.notAvailable',
                 clearTime: 'Clear Time'
             },
@@ -80,6 +81,9 @@ export default {
             },
             setFields: {
                 title: 'Set Fields: {stationName}'
+            },
+            editNotes: {
+                title: 'Edit Notes: {stationName}'
             },
             filters: {
                 title: 'Filters',

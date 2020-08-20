@@ -81,7 +81,6 @@ const mutations = {
         }
     },
     [StoreConstants.Stations.EDIT_NOTES](state, editStationNotesData) {
-        console.log("TEST")
         if (editStationNotesData) {
             const existingStation = findExistingStation(state.stations, editStationNotesData)
             if (existingStation) {

@@ -59,6 +59,9 @@
                         <b-dropdown-item-button @click="checkIn">
                             {{ $t('stations.actions.checkIn') }}
                         </b-dropdown-item-button>
+                        <b-dropdown-item-button @click="showEditNotes">
+                            {{ $t('stations.actions.editNotes') }}
+                        </b-dropdown-item-button>
                         <b-dropdown-item-button @click="showSetFields">
                             {{ $t('stations.actions.setFields') }}
                         </b-dropdown-item-button>
@@ -73,6 +76,7 @@
             </b-form>
         </div>
         <station-set-fields ref="setFieldsModal" :station="station"/>
+        <edit-station-notes ref="editNotesModal" :station="station"/>
         <template v-if="station.notes.length > 0" v-slot:footer>
             <b-card-text>{{$t('stations.fields.notes.displayLabel', {notes: station.notes})}}</b-card-text>
         </template>
@@ -85,9 +89,10 @@ import timeUtils from '../util/timeUtils'
 import {mapGetters} from 'vuex'
 import SocketEvents from '../../common/ref/SocketEvents'
 import StationStatusMixin from '../mixins/StationStatusMixin'
+import EditStationNotes from './modals/EditStationNotes'
 
 export default {
-    components: {StationSetFields},
+    components: {EditStationNotes, StationSetFields},
     name: 'station',
     props: ['station'],
     mixins: [StationStatusMixin],
@@ -159,6 +164,9 @@ export default {
                 status: this.StationStatus.DEFAULT
             })
             this.clearTime()
+        },
+        showEditNotes() {
+            this.$refs.editNotesModal.show()
         },
         toggleNotAvailable() {
             if (this.station.status === this.StationStatus.NOT_AVAILABLE)
