@@ -1,5 +1,5 @@
 const buildpaths = require('../buildpaths');
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const { VueLoaderPlugin } = require('vue-loader')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 
 const isProduction = process.env.NODE_ENV === 'production'
@@ -80,7 +80,9 @@ module.exports = {
                     {
                         loader: 'sass-loader',
                         options: {
-                            indentedSyntax: true
+                            sassOptions: {
+                                indentedSyntax: true
+                            }
                         }
                     }
 
