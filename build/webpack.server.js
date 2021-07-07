@@ -43,7 +43,6 @@ module.exports = {
     },
     externals: nodeModules,
     plugins: [
-        Webpack5Replacement,
         new webpack.BannerPlugin({
             banner: bannerString,
             raw: true,

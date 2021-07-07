@@ -30,6 +30,7 @@ export default {
                 setFields: 'Set Fields',
                 checkOut: 'Check Out',
                 checkIn: 'Check In/Return',
+                editNotes: 'Edit Notes',
                 toggleNotAvailable: 'Toggle @:stations.status.notAvailable',
                 clearTime: 'Clear Time'
             },
@@ -70,10 +71,19 @@ export default {
                 checkoutTime: {
                     label: "Checkout Time",
                     description: "The time that the station was checked out. This is is your local time."
+                },
+                notes: {
+                    label: 'Notes',
+                    displayLabel: '@:stations.fields.notes.label: {notes}',
+                    placeholder: 'Write some notes',
+                    description: 'Any needed notes about the station'
                 }
             },
             setFields: {
                 title: 'Set Fields: {stationName}'
+            },
+            editNotes: {
+                title: 'Edit Notes: {stationName}'
             },
             filters: {
                 title: 'Filters',

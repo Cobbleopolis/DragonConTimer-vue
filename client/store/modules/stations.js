@@ -23,12 +23,6 @@ const getters = {
 }
 
 const actions = {
-    [StoreConstants.Stations.UPDATE_STATION_FIELDS]({commit}) {
-        commit(StoreConstants.Stations.UPDATE_STATION_FIELDS)
-    },
-    [StoreConstants.Stations.CLEAR_TIME]({commit}) {
-        commit(StoreConstants.Stations.CLEAR_TIME)
-    }
 };
 
 const mutations = {
@@ -42,7 +36,8 @@ const mutations = {
                 stationObj.playerName,
                 stationObj.currentConsole,
                 stationObj.currentGame,
-                stationObj.checkoutTime
+                stationObj.checkoutTime,
+                stationObj.notes
             );
             const existingStation = findExistingStation(state.stations, station);
             if (existingStation)
@@ -81,6 +76,15 @@ const mutations = {
             const existingStation = findExistingStation(state.stations, clearTimeData);
             if (existingStation) {
                 existingStation.station.checkoutTime = null
+                state.stations.splice(existingStation.index, 1, existingStation.station)
+            }
+        }
+    },
+    [StoreConstants.Stations.EDIT_NOTES](state, editStationNotesData) {
+        if (editStationNotesData) {
+            const existingStation = findExistingStation(state.stations, editStationNotesData)
+            if (existingStation) {
+                existingStation.station.notes = editStationNotesData.notes
                 state.stations.splice(existingStation.index, 1, existingStation.station)
             }
         }

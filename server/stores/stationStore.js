@@ -20,7 +20,8 @@ function init() {
             stationObj.playerName,
             stationObj.currentConsole,
             stationObj.currentGame,
-            stationObj.checkoutTime
+            stationObj.checkoutTime,
+            stationObj.notes
         )
     ).forEach(station => {
         stations.set(station.id, station)
@@ -68,10 +69,21 @@ function clearTime(stationIdData) {
     StoreUtils.updateStoreFile(storeDataFileName, Array.from(stations.values()))
 }
 
+function editStationNotes(editStationNotesData) {
+    logger.debug('Edit Notes: ' + JSON.stringify(editStationNotesData))
+    let station = stations.get(editStationNotesData.id)
+    if (station) {
+        station.notes = editStationNotesData.notes
+        stations.set(station.id, station)
+    }
+    StoreUtils.updateStoreFile(storeDataFileName, Array.from(stations.values()))
+}
+
 export default {
     init,
     getStations,
     updateFields,
     updateStatus,
-    clearTime
+    clearTime,
+    editStationNotes
 }

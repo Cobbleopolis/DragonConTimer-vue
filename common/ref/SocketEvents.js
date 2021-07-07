@@ -6,7 +6,8 @@ const SocketEvents = {
         ADD_STATION: 'ADD_STATION',
         UPDATE_STATION_FIELDS: 'UPDATE_STATION_FIELDS',
         UPDATE_STATION_STATUS: 'UPDATE_STATION_STATUS',
-        CLEAR_TIME: 'CLEAR_TIME'
+        CLEAR_TIME: 'CLEAR_TIME',
+        EDIT_NOTES: 'EDIT_NOTES'
     },
     Consoles: {
         ADD_CONSOLE: 'ADD_CONSOLE'

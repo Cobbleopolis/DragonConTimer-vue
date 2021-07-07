@@ -1,11 +1,11 @@
 const path = require('path');
 const webpack = require('webpack');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const baseWebPackConfig = require('./webpack.client');
 const buildpaths = require('../buildpaths');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 module.exports = merge(baseWebPackConfig, {
     mode: 'production',
@@ -17,6 +17,9 @@ module.exports = merge(baseWebPackConfig, {
     },
     optimization: {
         minimize: true,
+        minimizer: [
+            new CssMinimizerPlugin(),
+        ],
         splitChunks: {
             chunks: 'all',
             maxSize: 249856,
@@ -42,7 +45,6 @@ module.exports = merge(baseWebPackConfig, {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')
         }),
-        new OptimizeCSSPlugin({}),
         new HtmlWebpackPlugin({
             template: buildpaths.client.htmlTemplateFile,
             inject: 'body',

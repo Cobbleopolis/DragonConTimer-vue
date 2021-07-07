@@ -1,6 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const baseWebPackConfig = require('./webpack.client');
 
 const buildpaths = require('../buildpaths');
