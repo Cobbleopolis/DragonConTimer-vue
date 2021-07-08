@@ -1,8 +1,8 @@
 <template>
     <b-card
         :header="$t('stations.header', {stationName: station.stationName, stationStatus: this.getLocalizedStationStatus(station.status)})"
-        header-tag="h6" class="mb-3" :border-variant="borderVariant"
-        :header-border-variant="borderVariant" :header-bg-variant="borderVariant">
+        header-tag="h6" class="mb-3" :border-variant="borderVariant()"
+        :header-border-variant="borderVariant()" :header-bg-variant="borderVariant()">
         <div class="container-fluid">
             <div class="row mb-1">
                 <div class="col-12">
@@ -110,26 +110,6 @@ export default {
         }
     },
     computed: {
-        borderVariant() {
-            switch (this.station.status) {
-                case this.StationStatus.DEFAULT:
-                    return 'default'
-                case this.StationStatus.CHECKED_OUT:
-                    let timeSinceCheckout = this.station.timeSinceCheckout().asMilliseconds()
-                    if (!timeSinceCheckout)
-                        return 'success'
-                    if (timeSinceCheckout <= this.$store.state.times.warning.asMilliseconds())
-                        return 'success'
-                    else if (timeSinceCheckout <= this.$store.state.times.kickOff.asMilliseconds())
-                        return 'warning'
-                    else
-                        return 'danger'
-                case this.StationStatus.NOT_AVAILABLE:
-                    return 'light'
-                default:
-                    return 'default'
-            }
-        },
         fullConsoleName: {
             get() {
                 if (!this.station.currentConsole || !this.getConsoleById()(this.station.currentConsole))
@@ -188,6 +168,26 @@ export default {
                     id: this.station.id,
                     status: this.StationStatus.NOT_AVAILABLE
                 })
+        },
+        borderVariant() {
+            switch (this.station.status) {
+                case this.StationStatus.DEFAULT:
+                    return 'default'
+                case this.StationStatus.CHECKED_OUT:
+                    let timeSinceCheckout = this.station.timeSinceCheckout().asMilliseconds()
+                    if (!timeSinceCheckout)
+                        return 'success'
+                    if (timeSinceCheckout <= this.$store.state.times.warning.asMilliseconds())
+                        return 'success'
+                    else if (timeSinceCheckout <= this.$store.state.times.kickOff.asMilliseconds())
+                        return 'warning'
+                    else
+                        return 'danger'
+                case this.StationStatus.NOT_AVAILABLE:
+                    return 'light'
+                default:
+                    return 'default'
+            }
         },
         getFormattedTimeFromNow() {
             this.timeSinceCheckout =
