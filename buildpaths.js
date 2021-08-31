@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('path').posix;
 
 const assetSrc = path.resolve('.', 'assets');
 
@@ -11,7 +11,7 @@ const commonSrc = path.resolve('.', 'common');
 
 const configPath = path.resolve('.', 'config');
 
-const storeDataPath = path.resolve('.', 'storeData', '*');
+const storeDataPath = path.resolve('.', 'storeData');
 
 const productionConfigPath = path.resolve('.', 'production.json');
 
@@ -20,7 +20,9 @@ const packageDetailPath = path.resolve('.', 'package.json');
 const outputBasePath = path.resolve('.', 'dist');
 const outputAssetPath = 'public';
 const outputConfigPath = path.join(outputBasePath, path.basename(configPath));
+const outputStoreDataPath = path.join(outputBasePath, path.basename(storeDataPath));
 const outputProductionConfigPath = path.join(outputConfigPath, path.basename(productionConfigPath));
+// const outputProductionStoreDataPath = path.join(outputStoreDataPath)
 const outputPackageDetailPath = path.join(outputBasePath, path.basename(packageDetailPath));
 
 const serverSrc = path.resolve('.', 'server');
@@ -75,7 +77,8 @@ const paths = {
         },
         configPath: outputConfigPath,
         productionConfPath: outputProductionConfigPath,
-        packageDetailPath: outputPackageDetailPath
+        packageDetailPath: outputPackageDetailPath,
+        productionStoreDataPath: outputStoreDataPath
     },
     server: {
         src: serverSrc,
