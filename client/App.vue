@@ -1,7 +1,7 @@
 <template>
     <div>
         <navbar></navbar>
-        <b-container tag="main">
+        <b-container fluid="lg" tag="main">
             <socket-status></socket-status>
             <router-view></router-view>
         </b-container>

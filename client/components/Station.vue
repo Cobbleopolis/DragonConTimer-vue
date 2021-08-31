@@ -16,43 +16,43 @@
                         v-else>{{ $t('data.invalidDuration') }}</span></p>
                 </div>
             </div>
-            <b-form inline class="row justify-content-between">
+            <b-form inline class="row ml-1 align-items-start justify-content-between d-flex flex-row">
                 <b-form-group :id="'playerNameInputGroup' + station.id"
-                              :label-for="'playerName' + station.id"
-                              labelCols="auto"
-                              labelClass="mr-2"
-                              :label="$t('stations.fields.playerName.label')">
+                            :label-for="'playerName' + station.id"
+                            labelCols="auto"
+                            labelClass="mr-2"
+                            :label="$t('stations.fields.playerName.label')">
                     <b-form-input type="text"
-                                  :id="'playerName' + station.id"
-                                  readonly
-                                  v-model="station.playerName"
-                                  class="input-horizontal"/>
+                                :id="'playerName' + station.id"
+                                readonly
+                                v-model="station.playerName"
+                                class="input-horizontal"/>
                 </b-form-group>
                 <b-form-group :id="'currentConsoleInputGroup' + station.id"
-                              label-align="center"
-                              labelCols="auto"
-                              labelClass="mx-2"
-                              :label-for="'currentConsole' + station.id"
-                              :label="$t('stations.fields.currentConsole.label')">
+                            label-align="center"
+                            labelCols="auto"
+                            labelClass="mx-2"
+                            :label-for="'currentConsole' + station.id"
+                            :label="$t('stations.fields.currentConsole.label')">
                     <b-form-input type="text"
-                                  :id="'currentConsole' + station.id"
-                                  readonly
-                                  v-model="fullConsoleName"/>
+                                :id="'currentConsole' + station.id"
+                                readonly
+                                v-model="fullConsoleName"/>
                 </b-form-group>
                 <b-form-group :id="'currentGameInputGroup' + station.id"
-                              class="mr-auto"
-                              labelCols="auto"
-                              labelClass="mx-2"
-                              label-align="center"
-                              :label-for="'currentGame' + station.id"
-                              :label="$t('stations.fields.currentGame.label')">
+                            class="mr-auto"
+                            labelCols="auto"
+                            labelClass="mx-2"
+                            label-align="center"
+                            :label-for="'currentGame' + station.id"
+                            :label="$t('stations.fields.currentGame.label')">
                     <b-form-input type="text"
-                                  :id="'currentGame' + station.id"
-                                  readonly
-                                  v-model="station.currentGame"/>
+                                :id="'currentGame' + station.id"
+                                readonly
+                                v-model="station.currentGame"/>
                 </b-form-group>
                 <div class="col-auto">
-                    <b-dropdown :text="$t('stations.actions.title')" class="float-right" variant="primary">
+                    <b-dropdown :text="$t('stations.actions.title')" class="float-right" right variant="primary">
                         <b-dropdown-item-button @click="showCheckOut">
                             {{ $t('stations.actions.checkOut') }}
                         </b-dropdown-item-button>

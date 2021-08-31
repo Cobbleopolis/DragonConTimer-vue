@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container-fluid">
         <b-row class="mb-2">
             <b-col cols="auto">
                 <b-button v-b-toggle.station-filter-sidebar variant="primary">{{ $t('stations.filters.title') }}
@@ -10,7 +10,7 @@
             </b-col>
         </b-row>
         <template v-for="station in this.filteredStations">
-            <b-row>
+            <b-row :key="station.id">
                 <b-col>
                     <station v-bind:station="station"></station>
                 </b-col>
@@ -23,7 +23,7 @@
                     label-for="stationStatusFilter">
                     <b-form-checkbox-group id="stationStatusFilter" v-model="selectedStates" stacked>
                         <template v-for="status in this.StationStatus">
-                            <b-form-checkbox :value="status">{{ getLocalizedStationStatus(status) }}</b-form-checkbox>
+                            <b-form-checkbox :key="status" :value="status">{{ getLocalizedStationStatus(status) }}</b-form-checkbox>
                         </template>
                     </b-form-checkbox-group>
                 </b-form-group>
@@ -33,7 +33,7 @@
                     label-for="stationConsoleFilter">
                     <b-form-checkbox-group id="stationConsoleFilter" v-model="selectedConsoles" stacked>
                         <template v-for="console in this.consoles">
-                            <b-form-checkbox :value="console.id">{{ console.name }}</b-form-checkbox>
+                            <b-form-checkbox :key="console.id" :value="console.id">{{ console.name }}</b-form-checkbox>
                         </template>
                     </b-form-checkbox-group>
                 </b-form-group>
