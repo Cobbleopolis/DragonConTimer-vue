@@ -9,7 +9,7 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 module.exports = merge(baseWebPackConfig, {
     mode: 'production',
-    devtool: '#source-map',
+    devtool: 'source-map',
     output: {
         path: buildpaths.output.base,
         filename: buildpaths.output.assets(['js', '[name].[chunkhash].js']),
@@ -56,14 +56,21 @@ module.exports = merge(baseWebPackConfig, {
                 // more options:
                 // https://github.com/kangax/html-minifier#options-quick-reference
             },
-            chunksSortMode: 'dependency'
+            minify: false,
+            chunksSortMode: 'auto'
         }),
-        new CopyWebpackPlugin([
-            {
-                from: buildpaths.assets(),
-                to: buildpaths.output.assets(),
-                ignore: [',*']
-            }
-        ]),
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: buildpaths.assets(),
+                    to: buildpaths.output.assets(),
+                    globOptions: {
+                        ignore: [
+                            '**/.gitkeep'
+                        ]
+                    }
+                }
+            ]
+        }),
     ]
 });

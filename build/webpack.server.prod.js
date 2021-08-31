@@ -14,29 +14,50 @@ module.exports = merge(baseWebPackConfig, {
         new webpack.NormalModuleReplacementPlugin(/^(.*)\.dev(.*)$/,
             (resource) => resource.request = resource.request.replace(/(\.dev)/, '')
         ),
-        new CopyWebpackPlugin([
-            {
-                from: buildpaths.config.path,
-                to: buildpaths.output.base
-            },
-            {
-                from: buildpaths.storeData.path,
-                to: buildpaths.output.base
-            },
-            {
-                from: buildpaths.productionConf.path,
-                to: buildpaths.output.productionConfPath
-            },
-            {
-                from: buildpaths.packageDetail.path,
-                to: buildpaths.output.packageDetailPath
-            }
-        ], {
-            ignore: [
-                'local*',
-                '.gitkeep'
-            ],
-            copyUnmodified: true
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: buildpaths.config.path,
+                    to: buildpaths.output.configPath,
+                    globOptions: {
+                        ignore: [
+                            '**/local*',
+                            '**/.gitkeep'
+                        ]
+                    }
+                },
+                {
+                    from: buildpaths.storeData.path,
+                    to: buildpaths.output.productionStoreDataPath,
+                    globOptions: {
+                        ignore: [
+                            '**/local*',
+                            '**/.gitkeep'
+                        ]
+                    }
+                    
+                },
+                {
+                    from: buildpaths.productionConf.path,
+                    to: buildpaths.output.productionConfPath,
+                    globOptions: {
+                        ignore: [
+                            '**/local*',
+                            '**/.gitkeep'
+                        ]
+                    }
+                },
+                {
+                    from: buildpaths.packageDetail.path,
+                    to: buildpaths.output.packageDetailPath,
+                    globOptions: {
+                        ignore: [
+                            '**/local*',
+                            '**/.gitkeep'
+                        ]
+                    }
+                }
+            ]
         })
     ]
 });
