@@ -11,13 +11,14 @@
 <script>
     import Navbar from './components/Navbar.vue'
     import SocketStatus from './components/SocketStatus.vue'
+    
 
     export default {
         name: 'app',
         components: {
             Navbar,
             SocketStatus
-        }
+        },
     };
 </script>
 

@@ -12,6 +12,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         socketConnected: false,
+        headerTitle: null,
         times: {
             warning: moment.duration('0m'),
             kickOff: moment.duration('0m')
@@ -32,6 +33,7 @@ export default new Vuex.Store({
         [StoreConstants.CoreInfo.SEND_CORE_INFO](state, coreInfo) {
             state.times.warning = moment.duration(coreInfo.times.warning)
             state.times.kickOff = moment.duration(coreInfo.times.kickOff)
+            state.headerTitle = coreInfo.headerTitle
         }
     },
     modules: {
