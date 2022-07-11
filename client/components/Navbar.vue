@@ -1,6 +1,6 @@
 <template>
     <b-navbar toggleable="lg" type="dark" variant="dark" fixed="top">
-        <b-navbar-brand>{{ $t('projectName') }}</b-navbar-brand>
+        <b-navbar-brand>{{ $t('projectName') }}<span v-if="headerTitle">: {{headerTitle}}</span></b-navbar-brand>
         <b-nav-toggle target="navCollapse"></b-nav-toggle>
         <b-collapse is-nav id="navCollapse">
             <b-navbar-nav>
@@ -11,7 +11,12 @@
 </template>
 
 <script>
+    import { mapState, mapActions, mapGetters } from 'vuex'
     export default {
-        name: 'navbar'
+        name: 'navbar',
+        
+        computed: {
+            ...mapState(['headerTitle'])
+        }
     }
 </script>

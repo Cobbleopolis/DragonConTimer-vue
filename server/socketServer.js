@@ -7,6 +7,7 @@ import SocketEvents from '../common/ref/SocketEvents'
 let io;
 
 let CoreInfo = {
+    headerTitle: config.get('headerTitle'),
     times: config.get('times')
 }
 
