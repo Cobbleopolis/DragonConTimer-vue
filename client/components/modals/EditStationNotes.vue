@@ -3,6 +3,7 @@
              :title="$t('stations.editNotes.title', {stationName: station.stationName})"
              size="lg" centered
              :ok-title="$t('forms.actions.submit')"
+             :return-focus="returnFocus"
              @shown="onShow"
              @ok="handleOk">
         <b-form-group :id="'editStationNotesGroup' + station.id"
@@ -11,7 +12,8 @@
                       :description="$t('stations.fields.notes.description')">
             <b-form-textarea :id="'editStationNotes' + station.id"
                              :placeholder="$t('stations.fields.notes.placeholder')"
-                             v-model="currentNotes"/>
+                             v-model="currentNotes"
+                             autofocus/>
         </b-form-group>
     </b-modal>
 </template>
@@ -22,7 +24,7 @@ import SocketEvents from '../../../common/ref/SocketEvents'
 
 export default {
     name: 'edit-station-notes',
-    props: ['station'],
+    props: ['station', 'returnFocus'],
     data() {
         return {
             currentNotes: this.station.notes

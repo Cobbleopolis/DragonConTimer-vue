@@ -52,7 +52,7 @@
                                 v-model="station.currentGame"/>
                 </b-form-group>
                 <div class="col-auto">
-                    <b-dropdown :text="$t('stations.actions.title')" class="float-right" right variant="primary">
+                    <b-dropdown :text="$t('stations.actions.title')" class="float-right" right variant="primary" ref="actionsDropdown">
                         <b-dropdown-item-button @click="showCheckOut">
                             {{ $t('stations.actions.checkOut') }}
                         </b-dropdown-item-button>
@@ -75,8 +75,8 @@
                 </div>
             </b-form>
         </div>
-        <station-set-fields ref="setFieldsModal" :station="station"/>
-        <edit-station-notes ref="editNotesModal" :station="station"/>
+        <station-set-fields ref="setFieldsModal" :station="station" :returnFocus="$refs.actionsDropdown"/>
+        <edit-station-notes ref="editNotesModal" :station="station" :returnFocus="$refs.actionsDropdown"/>
         <template v-if="station.notes.length > 0" v-slot:footer>
             <b-card-text>{{$t('stations.fields.notes.displayLabel', {notes: station.notes})}}</b-card-text>
         </template>
