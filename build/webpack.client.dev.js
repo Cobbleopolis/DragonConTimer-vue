@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const baseWebPackConfig = require('./webpack.client');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
+const FriendlyErrorsPlugin = require('@soda/friendly-errors-webpack-plugin');
 
 const buildpaths = require('../buildpaths');
 
