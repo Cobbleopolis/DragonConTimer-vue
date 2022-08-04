@@ -4,6 +4,7 @@
                  :title="$t('stations.setFields.title', {stationName: station.stationName})"
                  size="lg"
                  centered
+                 :return-focus="returnFocus"
                  @shown="onShow">
 
             <b-form-group :id="'playerNameInputGroup' + station.id"
@@ -13,7 +14,8 @@
                 <b-form-input type="text"
                               :id="'playerNameInput' + station.id"
                               :placeholder="$t('stations.fields.playerName.placeholder')"
-                              v-model="playerName"/>
+                              v-model="playerName"
+                              autofocus/>
             </b-form-group>
             <b-form-group :id="'consoleSelectGroup' + station.id"
                           :label-for="'consoleSelectInput' + station.id"
@@ -72,7 +74,7 @@ import StationStatusMixin from '../../mixins/StationStatusMixin'
 
 export default {
     name: 'station-set-fields',
-    props: ['station'],
+    props: ['station', 'returnFocus'],
     mixins: [StationStatusMixin],
     data() {
         return {
