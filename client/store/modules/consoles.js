@@ -22,7 +22,8 @@ const mutations = {
             const console = new Console(
                 consoleObj.id,
                 consoleObj.name,
-                consoleObj.games
+                consoleObj.games,
+                consoleObj.checkoutWarning
             );
             state.consoles = {...state.consoles, [console.id]: console}
         }
