@@ -24,9 +24,7 @@
                                :options="consoleOptions"
                                v-model="currentConsole"/>
             </b-form-group>
-            <b-alert v-if="this.currentConsoleObj && this.currentConsoleObj.checkoutWarning" variant="warning" class="text-dark" show>
-                {{this.currentConsoleObj.checkoutWarning}}
-            </b-alert>
+            <p v-if="this.currentConsoleObj && this.currentConsoleObj.checkoutWarning" class="text-warning">&#9888; {{this.currentConsoleObj.checkoutWarning}}</p>
             <b-form-group :id="'consoleGameGroup' + station.id"
                           :label-for="'currentGameInput' + station.id"
                           :label="$t('stations.fields.currentGame.label')"
