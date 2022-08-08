@@ -42,6 +42,19 @@ function updateFields(updateFieldData) {
             station.currentGame = updateFieldData.currentGame
             station.checkoutTime = moment(updateFieldData.checkoutTime)
             stations.set(station.id, station)
+        } else {
+            let addedStation = new Station (
+                updateFieldData.id,
+                updateFieldData.stationName,
+                updateFieldData.status,
+                updateFieldData.consoleOptions,
+                updateFieldData.playerName,
+                updateFieldData.currentConsole,
+                updateFieldData.currentGame,
+                updateFieldData.checkoutTime,
+                updateFieldData.notes
+            )
+            stations.set(addedStation.id, addedStation)
         }
         StoreUtils.updateStoreFile(storeDataFileName, Array.from(stations.values()))
     }
