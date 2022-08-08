@@ -1,18 +1,33 @@
 import logger from 'winston'
-import config from 'config'
 import Console from '../../common/api/Console'
+import StoreUtils from '../util/storeUtil'
+
+const storeDataFileName = 'consoles.json'
+
+const storeDefaultData = []
 
 let consoles = new Map();
 
 function init() {
-    config.get('consoles').map(consoleObj =>
+    StoreUtils.ensureStoreFile(storeDataFileName, storeDefaultData)
+    StoreUtils.getStoreFileContent(storeDataFileName).map(consoleObj =>
         new Console(
             consoleObj.id,
             consoleObj.name,
             consoleObj.games,
             consoleObj.checkoutWarning
         )
-    ).forEach(console => {consoles.set(console.id, console)});
+    ).forEach(console => {
+        consoles.set(console.id, console)
+    })
+    // config.get('consoles').map(consoleObj =>
+    //     new Console(
+    //         consoleObj.id,
+    //         consoleObj.name,
+    //         consoleObj.games,
+    //         consoleObj.checkoutWarning
+    //     )
+    // ).forEach(console => {consoles.set(console.id, console)});
 }
 
 function getConsoles() {
@@ -27,10 +42,19 @@ function updateFields(updateFieldData) {
             console.id = updateFieldData.id;
             console.name = updateFieldData.name;
             console.games = updateFieldData.games;
-            console.checkoutWarning = console.checkoutWarning;
+            console.checkoutWarning = updateFieldData.checkoutWarning;
             consoles.set(console.id, console);
+        } else {
+            let addedConsole = new Console(
+                updateFieldData.id,
+                updateFieldData.name,
+                updateFieldData.games,
+                updateFieldData.checkoutWarning
+            )
+            consoles.set(addedConsole.id, addedConsole)
         }
     }
+    StoreUtils.updateStoreFile(storeDataFileName, Array.from(consoles.values()))
 }
 
 export default {
