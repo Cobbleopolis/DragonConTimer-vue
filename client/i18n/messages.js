@@ -5,7 +5,8 @@ export default {
         projectName: buildinfo.displayName,
         pageNames: {
             index: 'Main Page',
-            availability: 'Availability'
+            availability: 'Availability',
+            config: 'Config'
         },
         forms: {
             actions: {
@@ -101,6 +102,12 @@ export default {
             games: {
                 availableIn: '@:availability.consoles.availableIn',
                 needToBeKicked: '@:availability.consoles.needToBeKicked'
+            }
+        },
+        config: {
+            tabs: {
+                consolesTab: 'Consoles',
+                stationsTab: 'Stations'
             }
         }
     }

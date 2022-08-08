@@ -13,6 +13,10 @@ app.get('/availability', (req, res) => {
     res.sendFile(path.resolve('.', 'index.html'))
 })
 
+app.get('/config', (req, res) => {
+    res.sendFile(path.resolve('.', 'index.html'))
+})
+
 app.get('/alive', (req, res) => {
     res.status(200).json({status:"ok"});
 });
