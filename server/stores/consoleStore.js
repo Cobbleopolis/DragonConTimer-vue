@@ -9,7 +9,8 @@ function init() {
         new Console(
             consoleObj.id,
             consoleObj.name,
-            consoleObj.games
+            consoleObj.games,
+            consoleObj.checkoutWarning
         )
     ).forEach(console => {consoles.set(console.id, console)});
 }
@@ -26,6 +27,7 @@ function updateFields(updateFieldData) {
             console.id = updateFieldData.id;
             console.name = updateFieldData.name;
             console.games = updateFieldData.games;
+            console.checkoutWarning = console.checkoutWarning;
             consoles.set(console.id, console);
         }
     }

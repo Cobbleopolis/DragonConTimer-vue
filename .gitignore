@@ -97,7 +97,7 @@ dist/*
 !dist/.gitkeep
 
 #config
-config/local*.json
+config/local*.json*
 
 #storeData
 storeData/*

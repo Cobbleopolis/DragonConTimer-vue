@@ -6,7 +6,6 @@
                  centered
                  :return-focus="returnFocus"
                  @shown="onShow">
-
             <b-form-group :id="'playerNameInputGroup' + station.id"
                           :label-for="'playerNameInput' + station.id"
                           :label="$t('stations.fields.playerName.label')"
@@ -25,6 +24,7 @@
                                :options="consoleOptions"
                                v-model="currentConsole"/>
             </b-form-group>
+            <p v-if="this.currentConsoleObj && this.currentConsoleObj.checkoutWarning" class="text-warning">&#9888; {{this.currentConsoleObj.checkoutWarning}}</p>
             <b-form-group :id="'consoleGameGroup' + station.id"
                           :label-for="'currentGameInput' + station.id"
                           :label="$t('stations.fields.currentGame.label')"
@@ -97,18 +97,25 @@ export default {
                     }
                 })
             },
-            currentGameOptions(state) {
+            currentConsoleObj(state) {
                 if (!this.currentConsole || !state.consoles[this.currentConsole])
+                    return null
+                else
+                    return state.consoles[this.currentConsole]
+            },
+            
+        }),
+        currentGameOptions() {
+                if (!this.currentConsoleObj)
                     return {}
                 else
-                    return state.consoles[this.currentConsole].games.map(g => {
+                    return this.currentConsoleObj.games.map(g => {
                         return {
                             value: g.name,
                             text: g.name
                         }
                     })
             }
-        })
     },
     methods: {
         show(overrideStatus) {
