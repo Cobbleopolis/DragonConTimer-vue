@@ -38,21 +38,44 @@ function updateFields(updateFieldData) {
     logger.debug("Updating fields: " + JSON.stringify(updateFieldData))
     if (updateFieldData) {
         let console = consoles.get(updateFieldData.id);
+        let updateData = updateFieldData.fields
         if (console) {
-            console.id = updateFieldData.id;
-            console.name = updateFieldData.name;
-            console.games = updateFieldData.games;
-            console.checkoutWarning = updateFieldData.checkoutWarning;
-            consoles.set(console.id, console);
+            if (updateFieldData.id !== updateData.id) {
+                consoles.delete(updateFieldData.id)
+                consoles.set(updateData.id, updateData)
+            } else {
+                console.id = updateData.id;
+                console.name = updateData.name;
+                console.games = updateData.games;
+                console.checkoutWarning = updateData.checkoutWarning;
+                consoles.set(console.id, console)
+            }
         } else {
             let addedConsole = new Console(
-                updateFieldData.id,
-                updateFieldData.name,
-                updateFieldData.games,
-                updateFieldData.checkoutWarning
+                updateData.id,
+                updateData.name,
+                updateData.games,
+                updateData.checkoutWarning
             )
             consoles.set(addedConsole.id, addedConsole)
         }
+        // if (!updateData)
+        //     updateData = updateFieldData
+        // if (console) {
+        //     console.id = updateData.id;
+        //     console.name = updateData.name;
+        //     console.games = updateData.games;
+        //     console.checkoutWarning = updateData.checkoutWarning;
+        //     consoles.set(console.id, console);
+        // } else {
+        //     let addedConsole = new Console(
+        //         updateData.id,
+        //         updateData.name,
+        //         updateData.games,
+        //         updateData.checkoutWarning
+        //     )
+        //     consoles.set(addedConsole.id, addedConsole)
+        // }
     }
     StoreUtils.updateStoreFile(storeDataFileName, Array.from(consoles.values()))
 }

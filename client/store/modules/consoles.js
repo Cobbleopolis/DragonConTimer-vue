@@ -38,18 +38,31 @@ const mutations = {
             let key = typeof(payload) === 'string' ? payload : payload.id
             Vue.delete(state.consoles, key)
         }
+    },
+    [StoreConstants.Consoles.UPDATE_CONSOLE_FIELDS](state, updateFieldData) {
+        if (updateFieldData) {
+            let console = state.consoles[updateFieldData.id]
+            let updateData = updateFieldData.fields
+            if (console) {
+                if (updateFieldData.id !== updateData.id) {
+                    Vue.delete(state.consoles, updateFieldData.id)
+                    state.consoles = {...state.consoles,[updateData.id]: updateData}
+                } else {
+                    console.id = updateData.id;
+                    console.name = updateData.name;
+                    console.games = updateData.games;
+                    console.checkoutWarning = updateData.checkoutWarning;
+                    state.consoles = {...state.consoles,[console.id]: console}
+                }
+                // state.consoles = {...state.consoles, [updateData.id]: updateData}
+            } else {
+                state.consoles = {...state.consoles,[updateData.id]: updateData}
+            }
+            // if (!updateData)
+            //     updateData = updateFieldData
+            // state.consoles = {...state.consoles, [updateFieldData.id]: updateData}
+        }
     }
-    // [StoreConstants.Stations.UPDATE_STATION_FIELDS](state, updateFieldsData) {
-    //     if (updateFieldsData) {
-    //         const existingStation = findExistingStation(state.stations, updateFieldsData);
-    //         if (existingStation) {
-    //             existingStation.station.playerName = updateFieldsData.playerName;
-    //             existingStation.station.currentConsole = updateFieldsData.currentConsole;
-    //             existingStation.station.currentGame = updateFieldsData.currentGame;
-    //             state.stations.splice(existingStation.index, 1, existingStation.station)
-    //         }
-    //     }
-    // }
 };
 
 // function findExistingStation(stationArr, station) {

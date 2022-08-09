@@ -12,6 +12,7 @@ const SocketEvents = {
     },
     Consoles: {
         ADD_CONSOLE: 'ADD_CONSOLE',
+        UPDATE_CONSOLE_FIELDS: 'UPDATE_CONSOLE_FIELDS',
         DELETE_CONSOLE: 'DELETE_CONSOLE',
     }
 };

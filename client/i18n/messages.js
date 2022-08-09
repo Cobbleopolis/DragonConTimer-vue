@@ -25,6 +25,29 @@ export default {
         data: {
             invalidDuration: 'Invalid Duration'
         },
+        consoles: {
+            fields: {
+                id: {
+                    label: 'Id',
+                    placeholder: 'console0',
+                    description: 'The internal id of the console.'
+                },
+                name: {
+                    label: 'Name',
+                    placeholder: 'Console 0',
+                    description: 'The name displayed in the dropdown menu.'
+                },
+                games: {
+                    label: 'Games',
+                    description: 'The list of games on this console.'
+                },
+                checkoutWarning: {
+                    label: 'Checkout Warning',
+                    placeholder: 'This console doesn\'t exist',
+                    description: 'The warning displayed when checking out the console.'
+                }
+            }
+        },
         stations: {
             actions: {
                 title: 'Actions',

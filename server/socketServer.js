@@ -64,6 +64,12 @@ export default (server) => {
             io.emit(SocketEvents.Stations.DELETE_STATION, deletedStation)
         }))
 
+        socket.on(SocketEvents.Consoles.UPDATE_CONSOLE_FIELDS, (updateFieldData) => {
+            console.log("UPDATE: " + JSON.stringify(updateFieldData))
+            consoleStore.updateFields(updateFieldData)
+            io.emit(SocketEvents.Consoles.UPDATE_CONSOLE_FIELDS, updateFieldData)
+        })
+
         socket.on('disconnect', () => {
             logger.debug("User Disconnected!")
         });

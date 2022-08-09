@@ -11,9 +11,14 @@ import SocketEvents from '../../../common/ref/SocketEvents'
 export default {
     name: 'StationConfig',
     props: ['station'],
+    data() {
+        return {
+            originalId: this.station.id
+        }
+    },
     methods: {
         deleteStation() {
-            this.$socket.emit(SocketEvents.Stations.DELETE_STATION, this.station.id)
+            this.$socket.emit(SocketEvents.Stations.DELETE_STATION, this.originalId)
         }
     }
 }
