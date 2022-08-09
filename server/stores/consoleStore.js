@@ -34,6 +34,17 @@ function getConsoles() {
     return consoles.values();
 }
 
+function addConsole(addedConsoleData) {
+    let addedConsole = new Console(
+        addedConsoleData.id,
+        addedConsoleData.name,
+        addedConsoleData.games,
+        addedConsoleData.checkoutWarning
+    )
+    consoles.set(addedConsole.id, addedConsole)
+    StoreUtils.updateStoreFile(storeDataFileName, Array.from(consoles.values()))
+}
+
 function updateFields(updateFieldData) {
     logger.debug("Updating fields: " + JSON.stringify(updateFieldData))
     if (updateFieldData) {
@@ -50,14 +61,6 @@ function updateFields(updateFieldData) {
                 console.checkoutWarning = updateData.checkoutWarning;
                 consoles.set(console.id, console)
             }
-        } else {
-            let addedConsole = new Console(
-                updateData.id,
-                updateData.name,
-                updateData.games,
-                updateData.checkoutWarning
-            )
-            consoles.set(addedConsole.id, addedConsole)
         }
         // if (!updateData)
         //     updateData = updateFieldData
@@ -90,6 +93,7 @@ function deleteConsole(deletedConsoleInfo) {
 export default {
     init,
     getConsoles,
+    addConsole,
     updateFields,
     deleteConsole
 };

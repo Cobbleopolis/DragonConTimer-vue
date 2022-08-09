@@ -32,6 +32,22 @@ function getStations() {
     return stations.values()
 }
 
+function addStation(addStationData) {
+    let addedStation = new Station (
+        addStationData.id,
+        addStationData.stationName,
+        addStationData.status,
+        addStationData.consoleOptions,
+        addStationData.playerName,
+        addStationData.currentConsole,
+        addStationData.currentGame,
+        addStationData.checkoutTime,
+        addStationData.notes
+    )
+    stations.set(addedStation.id, addedStation)
+    StoreUtils.updateStoreFile(storeDataFileName, Array.from(consoles.values()))
+}
+
 function updateFields(updateFieldData) {
     logger.debug('Updating fields: ' + JSON.stringify(updateFieldData))
     if (updateFieldData) {
@@ -102,6 +118,7 @@ function editStationNotes(editStationNotesData) {
 export default {
     init,
     getStations,
+    addStation,
     updateFields,
     updateStatus,
     deleteStation,

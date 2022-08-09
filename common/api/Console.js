@@ -14,14 +14,14 @@ export default class Console {
         } else {
             this.id = id;
             this.name = name;
-            if (this.games) {
+            if (games) {
                 this.games = games.map(obj => new Game(obj.name, obj.count))
                     .sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : -1);
             } else {
                 this.games = []
             }
-            this.checkoutWarning = checkoutWarning;
         }
+        this.checkoutWarning = checkoutWarning;
 
     }
 }

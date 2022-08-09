@@ -43,14 +43,12 @@ export default (server) => {
         })
 
         socket.on(SocketEvents.Consoles.ADD_CONSOLE, (addedConsole) => {
-            consoleStore.updateFields(addedConsole)
+            consoleStore.addConsole(addedConsole)
             io.emit(SocketEvents.Consoles.ADD_CONSOLE, addedConsole)
         })
 
         socket.on(SocketEvents.Stations.ADD_STATION, (addedStation => {
-            console.log("Added Station")
-            console.log(addedStation)
-            stationStore.updateFields(addedStation)
+            stationStore.addStation(addedStation)
             io.emit(SocketEvents.Stations.ADD_STATION, addedStation)
         }))
 

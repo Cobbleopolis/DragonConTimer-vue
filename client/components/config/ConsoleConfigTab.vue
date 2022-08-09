@@ -1,6 +1,6 @@
 <template>
     <b-tabs pills card vertical>
-        <b-tab v-for="console in consoles" :key="console.id" :title="console.name">
+        <b-tab v-for="console in consoles" :key="console.id" :title="console.name" lazy>
             <console-config :console="console"/>
         </b-tab>
         <template #tabs-end>

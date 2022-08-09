@@ -12,7 +12,10 @@ export default {
             actions: {
                 submit: "Submit",
                 reset: "Reset",
-                cancel: "Cancel"
+                cancel: "Cancel",
+                delete: "Delete",
+                save: "Save",
+                add: "Add"
             }
         },
         socket: {
@@ -45,6 +48,20 @@ export default {
                     label: 'Checkout Warning',
                     placeholder: 'This console doesn\'t exist',
                     description: 'The warning displayed when checking out the console.'
+                }
+            }
+        },
+        games: {
+            fields: {
+                name: {
+                    label: 'Name',
+                    placeholder: 'Game',
+                    description: 'The name of the game'
+                },
+                count: {
+                    label: 'Count',
+                    placeholder: '0',
+                    description: 'How many copies of the game we have'
                 }
             }
         },
