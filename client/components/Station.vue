@@ -135,9 +135,11 @@ export default {
         checkIn() {
             this.$socket.emit(SocketEvents.Stations.UPDATE_STATION_FIELDS, {
                 id: this.station.id,
-                playerName: '',
-                currentConsole: '',
-                currentGame: ''
+                fields: {
+                    playerName: '',
+                    currentConsole: '',
+                    currentGame: ''
+                }
             })
             this.$socket.emit(SocketEvents.Stations.UPDATE_STATION_STATUS, {
                 id: this.station.id,

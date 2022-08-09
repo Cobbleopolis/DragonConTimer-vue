@@ -72,21 +72,39 @@ export default {
                 checkOut: 'Check Out',
                 checkIn: 'Check In/Return',
                 editNotes: 'Edit Notes',
-                toggleNotAvailable: 'Toggle @:stations.status.notAvailable',
+                toggleNotAvailable: 'Toggle @:stations.fields.status.values.notAvailable',
                 clearTime: 'Clear Time'
             },
             header: "{stationName} ({stationStatus})",
-            status: {
-                title: 'Status',
-                default: "Available",
-                checkedOut: "Checked Out",
-                notAvailable: "Not Available"
-            },
             availableConsoles: {
                 text: "Available Consoles",
                 formatted: "@:stations.availableConsoles.text: <span class=\"font-weight-bold\">{consoleOptions}</span>",
             },
             fields: {
+                id: {
+                    label: "Id",
+                    placeholder: "station0",
+                    description: "The internal id of the station."
+                },
+                stationName: {
+                    label: "Name",
+                    placeholder: "Station 0",
+                    description: "The displayed name of the station."
+                },
+                status: {
+                    label: "Status",
+                    placeholder: "@:stations.fields.status.values.available",
+                    description: "The current status of the station.",
+                    values: {
+                        default: "Available",
+                        checkedOut: "Checked Out",
+                        notAvailable: "Not Available"
+                    }
+                },
+                consoleOptions: {
+                    label: "Console Options",
+                    description: "The list of consoles at this station."
+                },
                 playerName: {
                     label: 'Name',
                     placeholder: 'Enter Player Name',
@@ -129,7 +147,7 @@ export default {
             filters: {
                 title: 'Filters',
                 reset: 'Reset Filters',
-                statusFilter: '@:stations.status.title',
+                statusFilter: '@:stations.fields.status.label',
                 consoleFilter: '@:stations.availableConsoles.text'
             }
         },

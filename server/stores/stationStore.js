@@ -52,25 +52,36 @@ function updateFields(updateFieldData) {
     logger.debug('Updating fields: ' + JSON.stringify(updateFieldData))
     if (updateFieldData) {
         let station = stations.get(updateFieldData.id)
+        const updateData = updateFieldData.fields
         if (station) {
-            station.playerName = updateFieldData.playerName
-            station.currentConsole = updateFieldData.currentConsole
-            station.currentGame = updateFieldData.currentGame
-            station.checkoutTime = moment(updateFieldData.checkoutTime)
-            stations.set(station.id, station)
-        } else {
-            let addedStation = new Station (
-                updateFieldData.id,
-                updateFieldData.stationName,
-                updateFieldData.status,
-                updateFieldData.consoleOptions,
-                updateFieldData.playerName,
-                updateFieldData.currentConsole,
-                updateFieldData.currentGame,
-                updateFieldData.checkoutTime,
-                updateFieldData.notes
-            )
-            stations.set(addedStation.id, addedStation)
+            if (updateFieldData.id !== updateData.id) {
+                stations.delete(updateFieldData.id)
+                stations.set(updateData.id, new Station(
+                    updateData.id,
+                    updateData.stationName,
+                    updateData.status,
+                    updateData.consoleOptions,
+                    updateData.playerName,
+                    updateData.currentConsole,
+                    updateData.currentGame,
+                    updateData.checkoutTime,
+                    updateData.notes
+                ))
+            } else {
+                if (updateData.id)
+                    station.id = updateData.id
+                if (updateData.stationName)
+                    station.stationName = updateData.stationName
+                // if (updateData.status)
+                //     station.status = updateData.status
+                if (updateData.consoleOptions)
+                    station.consoleOptions = updateData.consoleOptions
+                station.playerName = updateData.playerName
+                station.currentConsole = updateData.currentConsole
+                station.currentGame = updateData.currentGame
+                station.checkoutTime = moment(updateData.checkoutTime)
+                stations.set(station.id, station)
+            }
         }
         StoreUtils.updateStoreFile(storeDataFileName, Array.from(stations.values()))
     }

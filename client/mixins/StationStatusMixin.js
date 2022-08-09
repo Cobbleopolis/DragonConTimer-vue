@@ -8,13 +8,13 @@ export default {
         getLocalizedStationStatus(status) {
             switch (status) {
                 case this.StationStatus.DEFAULT:
-                    return this.$t('stations.status.default')
+                    return this.$t('stations.fields.status.values.default')
                 case this.StationStatus.CHECKED_OUT:
-                    return this.$t('stations.status.checkedOut')
+                    return this.$t('stations.fields.status.values.checkedOut')
                 case this.StationStatus.NOT_AVAILABLE:
-                    return this.$t('stations.status.notAvailable')
+                    return this.$t('stations.fields.status.values.notAvailable')
                 default:
-                    return this.$t('stations.status.default')
+                    return this.$t('stations.fields.status.values.default')
             }
         }
     }

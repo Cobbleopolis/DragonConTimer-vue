@@ -54,15 +54,39 @@ const mutations = {
         else
             addStation(payload)
     },
-    [StoreConstants.Stations.UPDATE_STATION_FIELDS](state, updateFieldsData) {
-        if (updateFieldsData) {
-            const existingStation = findExistingStation(state.stations, updateFieldsData);
+    [StoreConstants.Stations.UPDATE_STATION_FIELDS](state, updateFieldData) {
+        if (updateFieldData) {
+            const existingStation = findExistingStation(state.stations, updateFieldData);
+            const updateData = updateFieldData.fields
             if (existingStation) {
-                existingStation.station.playerName = updateFieldsData.playerName;
-                existingStation.station.currentConsole = updateFieldsData.currentConsole;
-                existingStation.station.currentGame = updateFieldsData.currentGame;
-                existingStation.station.checkoutTime = moment(updateFieldsData.checkoutTime);
-                state.stations.splice(existingStation.index, 1, existingStation.station)
+                if (updateFieldData.id !== existingStation.station.id) {
+                    state.stations[existingStation.index] = new Station(
+                        updateData.id,
+                        updateData.stationName,
+                        updateData.status,
+                        updateData.consoleOption,
+                        updateData.playerName,
+                        updateData.currentConsole,
+                        updateData.currentGame,
+                        updateData.checkoutTime,
+                        updateData.notes
+                    )    
+                } else {
+                    if (updateData.id)
+                        existingStation.station.id = updateData.id
+                    if (updateData.stationName)
+                        existingStation.station.stationName = updateData.stationName
+                    // if (updateData.status)
+                    //     existingStation.station.status = updateData.status
+                    if (updateData.consoleOptions)
+                        existingStation.station.consoleOptions = updateData.consoleOptions
+
+                    existingStation.station.playerName = updateData.playerName;
+                    existingStation.station.currentConsole = updateData.currentConsole;
+                    existingStation.station.currentGame = updateData.currentGame;
+                    existingStation.station.checkoutTime = moment(updateData.checkoutTime);
+                    state.stations.splice(existingStation.index, 1, existingStation.station)
+                }
             }
         }
     },

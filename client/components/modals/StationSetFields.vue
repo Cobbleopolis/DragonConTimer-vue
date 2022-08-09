@@ -145,10 +145,12 @@ export default {
             if (e) e.preventDefault()
             this.$socket.emit(SocketEvents.Stations.UPDATE_STATION_FIELDS, {
                 id: this.station.id,
-                playerName: this.playerName,
-                currentConsole: this.currentConsole,
-                currentGame: this.currentGame,
-                checkoutTime: (this.overrideStatus === this.StationStatus.CHECKED_OUT) ? moment(moment.now()) : this.currentTime
+                fields: {
+                    playerName: this.playerName,
+                    currentConsole: this.currentConsole,
+                    currentGame: this.currentGame,
+                    checkoutTime: (this.overrideStatus === this.StationStatus.CHECKED_OUT) ? moment(moment.now()) : this.currentTime
+                }
             })
             this.$socket.emit(SocketEvents.Stations.EDIT_NOTES, {
                 id: this.station.id,

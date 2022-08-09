@@ -53,7 +53,12 @@ function updateFields(updateFieldData) {
         if (console) {
             if (updateFieldData.id !== updateData.id) {
                 consoles.delete(updateFieldData.id)
-                consoles.set(updateData.id, updateData)
+                consoles.set(updateData.id, new Console(
+                    updateData.id,
+                    updateData.name,
+                    updateData.games,
+                    updateData.checkoutWarning
+                ))
             } else {
                 console.id = updateData.id;
                 console.name = updateData.name;
