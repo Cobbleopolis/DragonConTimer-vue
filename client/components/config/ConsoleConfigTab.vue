@@ -13,6 +13,9 @@
 <script>
 import ConsoleConfig from './ConsoleConfig.vue'
 import {mapState} from 'vuex';
+//import Station from '../../../common/api/Station';
+import Console from '../../../common/api/Console';
+import SocketEvents from '../../../common/ref/SocketEvents'
 
 export default {
     name: 'ConsoleConfigTab',
@@ -22,11 +25,8 @@ export default {
     },
     methods: {
         newTab() {
-            let newId = prompt('New Console Id')
-            if (newId) {
-                newId = newId.toLowerCase()
-                console.log(newId)
-            }
+            let consoleCount = Object.keys(this.consoles).length
+            this.$socket.emit(SocketEvents.Consoles.ADD_CONSOLE, new Console("console" + consoleCount, "Console " + consoleCount, [], ''))
         }
     }
 }

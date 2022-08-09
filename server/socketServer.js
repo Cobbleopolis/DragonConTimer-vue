@@ -42,6 +42,16 @@ export default (server) => {
             io.emit(SocketEvents.Stations.EDIT_NOTES, editStationNotesData)
         })
 
+        socket.on(SocketEvents.Consoles.ADD_CONSOLE, (addedConsole) => {
+            consoleStore.updateFields(addedConsole)
+            io.emit(SocketEvents.Consoles.ADD_CONSOLE, addedConsole)
+        })
+
+        socket.on(SocketEvents.Stations.ADD_STATION, (addedStation => {
+            stationStore.updateFields(addedStation)
+            io.emit(SocketEvents.Stations.ADD_STATION, addedStation)
+        }))
+
         socket.on('disconnect', () => {
             logger.debug("User Disconnected!")
         });

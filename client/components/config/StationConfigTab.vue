@@ -13,6 +13,8 @@
 <script>
 import {mapState} from 'vuex';
 import StationConfig from './StationConfig.vue'
+import Station from '../../../common/api/Station';
+import SocketEvents from '../../../common/ref/SocketEvents'
 
 export default {
     name: 'StationConfigTab',
@@ -22,11 +24,8 @@ export default {
     },
     methods: {
         newTab() {
-            let newId = prompt('New Station Id')
-            if (newId) {
-                newId = newId.toLowerCase()
-                console.log(newId)
-            }
+            let stationCount = Object.keys(this.stations).length
+            this.$socket.emit(SocketEvents.Stations.ADD_STATION, new Station("station" + stationCount, "Station " + stationCount, [], null, null, null, null, null, null))
         }
     }
 }
