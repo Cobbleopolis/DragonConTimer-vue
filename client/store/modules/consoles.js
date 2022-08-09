@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import Console from '../../../common/api/Console';
 import StoreConstants from '../StoreConstants';
 
@@ -32,6 +33,12 @@ const mutations = {
         else
             addConsole(payload)
     },
+    [StoreConstants.Consoles.DELETE_CONSOLE](state, payload) {
+        if (payload) {
+            let key = typeof(payload) === 'string' ? payload : payload.id
+            Vue.delete(state.consoles, key)
+        }
+    }
     // [StoreConstants.Stations.UPDATE_STATION_FIELDS](state, updateFieldsData) {
     //     if (updateFieldsData) {
     //         const existingStation = findExistingStation(state.stations, updateFieldsData);

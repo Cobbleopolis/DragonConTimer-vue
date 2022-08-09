@@ -26,7 +26,12 @@ export default {
     methods: {
         newTab() {
             let consoleCount = Object.keys(this.consoles).length
-            this.$socket.emit(SocketEvents.Consoles.ADD_CONSOLE, new Console("console" + consoleCount, "Console " + consoleCount, [], ''))
+            let consoleId = "console" + consoleCount
+            while (this.consoles[consoleId]) {
+                consoleCount++
+                consoleId = "console" + consoleCount
+            }
+            this.$socket.emit(SocketEvents.Consoles.ADD_CONSOLE, new Console(consoleId, "Console " + consoleCount, [], ''))
         }
     }
 }

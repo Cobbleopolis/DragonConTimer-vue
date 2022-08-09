@@ -57,8 +57,16 @@ function updateFields(updateFieldData) {
     StoreUtils.updateStoreFile(storeDataFileName, Array.from(consoles.values()))
 }
 
+function deleteConsole(deletedConsoleInfo) {
+    logger.debug("Deleting console: " + JSON.stringify(deletedConsoleInfo))
+    let key = typeof(deletedConsoleInfo) === 'string' ? deletedConsoleInfo : deletedConsoleInfo.id
+    consoles.delete(key)
+    StoreUtils.updateStoreFile(storeDataFileName, Array.from(consoles.values()))
+}
+
 export default {
     init,
     getConsoles,
-    updateFields
+    updateFields,
+    deleteConsole
 };

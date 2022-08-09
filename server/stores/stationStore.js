@@ -72,6 +72,13 @@ function updateStatus(updateStatusData) {
     }
 }
 
+function deleteStation(deletedStationInfo) {
+    logger.debug("Deleting station: " + JSON.stringify(deletedStationInfo))
+    let key = typeof(deletedStationInfo) === 'string' ? deletedStationInfo : deletedStationInfo.id
+    stations.delete(key)
+    StoreUtils.updateStoreFile(storeDataFileName, Array.from(stations.values()))
+}
+
 function clearTime(stationIdData) {
     logger.debug('Clearing Time: ' + JSON.stringify(stationIdData))
     let station = stations.get(stationIdData.id)
@@ -97,6 +104,7 @@ export default {
     getStations,
     updateFields,
     updateStatus,
+    deleteStation,
     clearTime,
-    editStationNotes
+    editStationNotes,
 }

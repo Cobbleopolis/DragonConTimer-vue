@@ -48,8 +48,20 @@ export default (server) => {
         })
 
         socket.on(SocketEvents.Stations.ADD_STATION, (addedStation => {
+            console.log("Added Station")
+            console.log(addedStation)
             stationStore.updateFields(addedStation)
             io.emit(SocketEvents.Stations.ADD_STATION, addedStation)
+        }))
+
+        socket.on(SocketEvents.Consoles.DELETE_CONSOLE, (deletedConsole => {
+            consoleStore.deleteConsole(deletedConsole)
+            io.emit(SocketEvents.Consoles.DELETE_CONSOLE, deletedConsole)
+        }))
+
+        socket.on(SocketEvents.Stations.DELETE_STATION, (deletedStation => {
+            stationStore.deleteStation(deletedStation)
+            io.emit(SocketEvents.Stations.DELETE_STATION, deletedStation)
         }))
 
         socket.on('disconnect', () => {
