@@ -15,6 +15,7 @@ import {mapState, mapGetters} from 'vuex';
 import StationConfig from './StationConfig.vue'
 import Station from '../../../common/api/Station';
 import SocketEvents from '../../../common/ref/SocketEvents'
+import StationStatus from '../../../common/api/StationStatus'
 
 export default {
     name: 'StationConfigTab',
@@ -32,7 +33,7 @@ export default {
                 stationCount++
                 stationId = "station" + stationCount
             }
-            this.$socket.emit(SocketEvents.Stations.ADD_STATION, new Station(stationId, "Station " + stationCount, [], null, null, null, null, null, null))
+            this.$socket.emit(SocketEvents.Stations.ADD_STATION, new Station(stationId, "Station " + stationCount, StationStatus.DEFAULT, [], null, null, null, null, null, null))
         }
     }
 }

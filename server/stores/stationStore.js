@@ -54,7 +54,7 @@ function updateFields(updateFieldData) {
         let station = stations.get(updateFieldData.id)
         const updateData = updateFieldData.fields
         if (station) {
-            if (updateFieldData.id !== updateData.id) {
+            if (updateData.id && updateFieldData.id !== updateData.id) {
                 stations.delete(updateFieldData.id)
                 stations.set(updateData.id, new Station(
                     updateData.id,

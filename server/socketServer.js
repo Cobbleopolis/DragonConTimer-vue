@@ -63,7 +63,6 @@ export default (server) => {
         }))
 
         socket.on(SocketEvents.Consoles.UPDATE_CONSOLE_FIELDS, (updateFieldData) => {
-            console.log("UPDATE: " + JSON.stringify(updateFieldData))
             consoleStore.updateFields(updateFieldData)
             io.emit(SocketEvents.Consoles.UPDATE_CONSOLE_FIELDS, updateFieldData)
         })
