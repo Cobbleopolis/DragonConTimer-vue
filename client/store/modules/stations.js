@@ -72,19 +72,9 @@ const mutations = {
                         updateData.notes
                     )    
                 } else {
-                    if (updateData.id)
-                        existingStation.station.id = updateData.id
-                    if (updateData.stationName)
-                        existingStation.station.stationName = updateData.stationName
-                    // if (updateData.status)
-                    //     existingStation.station.status = updateData.status
-                    if (updateData.consoleOptions)
-                        existingStation.station.consoleOptions = updateData.consoleOptions
-
-                    existingStation.station.playerName = updateData.playerName;
-                    existingStation.station.currentConsole = updateData.currentConsole;
-                    existingStation.station.currentGame = updateData.currentGame;
-                    existingStation.station.checkoutTime = moment(updateData.checkoutTime);
+                    Object.keys(updateData).forEach(field => {
+                        existingStation.station[field] = updateData[field]
+                    })
                     state.stations.splice(existingStation.index, 1, existingStation.station)
                 }
             }

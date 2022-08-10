@@ -60,30 +60,16 @@ function updateFields(updateFieldData) {
                     updateData.checkoutWarning
                 ))
             } else {
-                console.id = updateData.id;
-                console.name = updateData.name;
-                console.games = updateData.games;
-                console.checkoutWarning = updateData.checkoutWarning;
+                Object.keys(updateData).forEach(field => {
+                    if (field === 'games') {
+                        console[field] = input[field].map(o => new Game(o.name, o.count))
+                    } else {
+                        console[field] = input[field]
+                    }
+                })
                 consoles.set(console.id, console)
             }
         }
-        // if (!updateData)
-        //     updateData = updateFieldData
-        // if (console) {
-        //     console.id = updateData.id;
-        //     console.name = updateData.name;
-        //     console.games = updateData.games;
-        //     console.checkoutWarning = updateData.checkoutWarning;
-        //     consoles.set(console.id, console);
-        // } else {
-        //     let addedConsole = new Console(
-        //         updateData.id,
-        //         updateData.name,
-        //         updateData.games,
-        //         updateData.checkoutWarning
-        //     )
-        //     consoles.set(addedConsole.id, addedConsole)
-        // }
     }
     StoreUtils.updateStoreFile(storeDataFileName, Array.from(consoles.values()))
 }

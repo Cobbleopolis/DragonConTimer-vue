@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Console from '../../../common/api/Console';
+import Game from '../../../common/api/Game';
 import StoreConstants from '../StoreConstants';
 
 const state = {
@@ -48,19 +49,18 @@ const mutations = {
                     Vue.delete(state.consoles, updateFieldData.id)
                     state.consoles = {...state.consoles,[updateData.id]: updateData}
                 } else {
-                    console.id = updateData.id;
-                    console.name = updateData.name;
-                    console.games = updateData.games;
-                    console.checkoutWarning = updateData.checkoutWarning;
+                    Object.keys(updateData).forEach(field => {
+                        if (field === 'games') {
+                            console[field] = input[field].map(o => new Game(o.name, o.count))
+                        } else {
+                            console[field] = input[field]
+                        }
+                    })
                     state.consoles = {...state.consoles,[console.id]: console}
                 }
-                // state.consoles = {...state.consoles, [updateData.id]: updateData}
             } else {
                 state.consoles = {...state.consoles,[updateData.id]: updateData}
             }
-            // if (!updateData)
-            //     updateData = updateFieldData
-            // state.consoles = {...state.consoles, [updateFieldData.id]: updateData}
         }
     }
 };

@@ -68,18 +68,9 @@ function updateFields(updateFieldData) {
                     updateData.notes
                 ))
             } else {
-                if (updateData.id)
-                    station.id = updateData.id
-                if (updateData.stationName)
-                    station.stationName = updateData.stationName
-                // if (updateData.status)
-                //     station.status = updateData.status
-                if (updateData.consoleOptions)
-                    station.consoleOptions = updateData.consoleOptions
-                station.playerName = updateData.playerName
-                station.currentConsole = updateData.currentConsole
-                station.currentGame = updateData.currentGame
-                station.checkoutTime = moment(updateData.checkoutTime)
+                Object.keys(updateData).forEach(field => {
+                    station[field] = updateData[field]
+                })
                 stations.set(station.id, station)
             }
         }
