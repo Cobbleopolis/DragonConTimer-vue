@@ -135,9 +135,11 @@ export default {
         checkIn() {
             this.$socket.emit(SocketEvents.Stations.UPDATE_STATION_FIELDS, {
                 id: this.station.id,
-                playerName: '',
-                currentConsole: '',
-                currentGame: ''
+                fields: {
+                    playerName: '',
+                    currentConsole: '',
+                    currentGame: ''
+                }
             })
             this.$socket.emit(SocketEvents.Stations.UPDATE_STATION_STATUS, {
                 id: this.station.id,
@@ -174,15 +176,20 @@ export default {
                 case this.StationStatus.DEFAULT:
                     return 'default'
                 case this.StationStatus.CHECKED_OUT:
-                    let timeSinceCheckout = this.station.timeSinceCheckout().asMilliseconds()
-                    if (!timeSinceCheckout)
-                        return 'success'
-                    if (timeSinceCheckout <= this.$store.state.times.warning.asMilliseconds())
-                        return 'success'
-                    else if (timeSinceCheckout <= this.$store.state.times.kickOff.asMilliseconds())
-                        return 'warning'
-                    else
-                        return 'danger'
+                    const timeSinceCheckoutRaw = this.station.timeSinceCheckout()
+                    if (timeSinceCheckoutRaw) {
+                        const timeSinceCheckout = timeSinceCheckoutRaw.asMilliseconds()
+                        if (!timeSinceCheckout)
+                            return 'success'
+                        if (timeSinceCheckout <= this.$store.state.times.warning.asMilliseconds())
+                            return 'success'
+                        else if (timeSinceCheckout <= this.$store.state.times.kickOff.asMilliseconds())
+                            return 'warning'
+                        else
+                            return 'danger'
+                    } else {
+                        return 'default'
+                    }
                 case this.StationStatus.NOT_AVAILABLE:
                     return 'light'
                 default:

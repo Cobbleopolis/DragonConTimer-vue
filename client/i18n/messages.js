@@ -5,13 +5,17 @@ export default {
         projectName: buildinfo.displayName,
         pageNames: {
             index: 'Main Page',
-            availability: 'Availability'
+            availability: 'Availability',
+            config: 'Config'
         },
         forms: {
             actions: {
                 submit: "Submit",
                 reset: "Reset",
-                cancel: "Cancel"
+                cancel: "Cancel",
+                delete: "Delete",
+                save: "Save",
+                add: "Add"
             }
         },
         socket: {
@@ -24,6 +28,43 @@ export default {
         data: {
             invalidDuration: 'Invalid Duration'
         },
+        consoles: {
+            fields: {
+                id: {
+                    label: 'Id',
+                    placeholder: 'console0',
+                    description: 'The internal id of the console.'
+                },
+                name: {
+                    label: 'Name',
+                    placeholder: 'Console 0',
+                    description: 'The name displayed in the dropdown menu.'
+                },
+                games: {
+                    label: 'Games',
+                    description: 'The list of games on this console.'
+                },
+                checkoutWarning: {
+                    label: 'Checkout Warning',
+                    placeholder: 'This console doesn\'t exist',
+                    description: 'The warning displayed when checking out the console.'
+                }
+            }
+        },
+        games: {
+            fields: {
+                name: {
+                    label: 'Name',
+                    placeholder: 'Game',
+                    description: 'The name of the game'
+                },
+                count: {
+                    label: 'Count',
+                    placeholder: '0',
+                    description: 'How many copies of the game we have'
+                }
+            }
+        },
         stations: {
             actions: {
                 title: 'Actions',
@@ -31,21 +72,39 @@ export default {
                 checkOut: 'Check Out',
                 checkIn: 'Check In/Return',
                 editNotes: 'Edit Notes',
-                toggleNotAvailable: 'Toggle @:stations.status.notAvailable',
+                toggleNotAvailable: 'Toggle @:stations.fields.status.values.notAvailable',
                 clearTime: 'Clear Time'
             },
             header: "{stationName} ({stationStatus})",
-            status: {
-                title: 'Status',
-                default: "Available",
-                checkedOut: "Checked Out",
-                notAvailable: "Not Available"
-            },
             availableConsoles: {
                 text: "Available Consoles",
                 formatted: "@:stations.availableConsoles.text: <span class=\"font-weight-bold\">{consoleOptions}</span>",
             },
             fields: {
+                id: {
+                    label: "Id",
+                    placeholder: "station0",
+                    description: "The internal id of the station."
+                },
+                stationName: {
+                    label: "Name",
+                    placeholder: "Station 0",
+                    description: "The displayed name of the station."
+                },
+                status: {
+                    label: "Status",
+                    placeholder: "@:stations.fields.status.values.available",
+                    description: "The current status of the station.",
+                    values: {
+                        default: "Available",
+                        checkedOut: "Checked Out",
+                        notAvailable: "Not Available"
+                    }
+                },
+                consoleOptions: {
+                    label: "Console Options",
+                    description: "The list of consoles at this station."
+                },
                 playerName: {
                     label: 'Name',
                     placeholder: 'Enter Player Name',
@@ -88,7 +147,7 @@ export default {
             filters: {
                 title: 'Filters',
                 reset: 'Reset Filters',
-                statusFilter: '@:stations.status.title',
+                statusFilter: '@:stations.fields.status.label',
                 consoleFilter: '@:stations.availableConsoles.text'
             }
         },
@@ -101,6 +160,12 @@ export default {
             games: {
                 availableIn: '@:availability.consoles.availableIn',
                 needToBeKicked: '@:availability.consoles.needToBeKicked'
+            }
+        },
+        config: {
+            tabs: {
+                consolesTab: 'Consoles',
+                stationsTab: 'Stations'
             }
         }
     }

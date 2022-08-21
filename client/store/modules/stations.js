@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import moment from 'moment';
 import Station from '../../../common/api/Station';
 import StoreConstants from '../StoreConstants';
@@ -8,6 +9,9 @@ const state = {
 
 const getters = {
     stations: state => state.stations,
+    getStationById: state => stationId => {
+        return state.stations.find(station => station.id === stationId)
+    },
     getStationByConsoleOptions: state => consoleOption => {
         return state.stations.filter(station => station.consoleOptions.includes(consoleOption))
     },
@@ -50,15 +54,29 @@ const mutations = {
         else
             addStation(payload)
     },
-    [StoreConstants.Stations.UPDATE_STATION_FIELDS](state, updateFieldsData) {
-        if (updateFieldsData) {
-            const existingStation = findExistingStation(state.stations, updateFieldsData);
+    [StoreConstants.Stations.UPDATE_STATION_FIELDS](state, updateFieldData) {
+        if (updateFieldData) {
+            const existingStation = findExistingStation(state.stations, updateFieldData);
+            const updateData = updateFieldData.fields
             if (existingStation) {
-                existingStation.station.playerName = updateFieldsData.playerName;
-                existingStation.station.currentConsole = updateFieldsData.currentConsole;
-                existingStation.station.currentGame = updateFieldsData.currentGame;
-                existingStation.station.checkoutTime = moment(updateFieldsData.checkoutTime);
-                state.stations.splice(existingStation.index, 1, existingStation.station)
+                if (updateFieldData.id !== existingStation.station.id) {
+                    state.stations[existingStation.index] = new Station(
+                        updateData.id,
+                        updateData.stationName,
+                        updateData.status,
+                        updateData.consoleOption,
+                        updateData.playerName,
+                        updateData.currentConsole,
+                        updateData.currentGame,
+                        updateData.checkoutTime,
+                        updateData.notes
+                    )    
+                } else {
+                    Object.keys(updateData).forEach(field => {
+                        existingStation.station[field] = updateData[field]
+                    })
+                    state.stations.splice(existingStation.index, 1, existingStation.station)
+                }
             }
         }
     },
@@ -69,6 +87,14 @@ const mutations = {
                 existingStation.station.status = updateStatusData.status;
                 state.stations.splice(existingStation.index, 1, existingStation.station);
             }
+        }
+    },
+    [StoreConstants.Stations.DELETE_STATION](state, payload) {
+        if (payload) {
+            const key = typeof(payload) === 'string' ? payload : payload.id
+            const existingStation = findExistingStation (state.stations, { id: key })
+            if (existingStation)
+                Vue.delete(state.stations, existingStation.index)
         }
     },
     [StoreConstants.Stations.CLEAR_TIME](state, clearTimeData) {

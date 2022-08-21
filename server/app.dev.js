@@ -13,6 +13,7 @@ const middleware = webpackDevMiddleware(compiler, {
 
 app.use(middleware);
 app.use('/availability', middleware);
+app.use('/config', middleware)
 app.use(webpackHotMiddleware(compiler));
 app.get('/alive', (req, res) => {
     res.status(200).json({status:"ok"});

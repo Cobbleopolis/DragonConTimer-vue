@@ -42,6 +42,31 @@ export default (server) => {
             io.emit(SocketEvents.Stations.EDIT_NOTES, editStationNotesData)
         })
 
+        socket.on(SocketEvents.Consoles.ADD_CONSOLE, (addedConsole) => {
+            consoleStore.addConsole(addedConsole)
+            io.emit(SocketEvents.Consoles.ADD_CONSOLE, addedConsole)
+        })
+
+        socket.on(SocketEvents.Stations.ADD_STATION, (addedStation => {
+            stationStore.addStation(addedStation)
+            io.emit(SocketEvents.Stations.ADD_STATION, addedStation)
+        }))
+
+        socket.on(SocketEvents.Consoles.DELETE_CONSOLE, (deletedConsole => {
+            consoleStore.deleteConsole(deletedConsole)
+            io.emit(SocketEvents.Consoles.DELETE_CONSOLE, deletedConsole)
+        }))
+
+        socket.on(SocketEvents.Stations.DELETE_STATION, (deletedStation => {
+            stationStore.deleteStation(deletedStation)
+            io.emit(SocketEvents.Stations.DELETE_STATION, deletedStation)
+        }))
+
+        socket.on(SocketEvents.Consoles.UPDATE_CONSOLE_FIELDS, (updateFieldData) => {
+            consoleStore.updateFields(updateFieldData)
+            io.emit(SocketEvents.Consoles.UPDATE_CONSOLE_FIELDS, updateFieldData)
+        })
+
         socket.on('disconnect', () => {
             logger.debug("User Disconnected!")
         });

@@ -1,7 +1,7 @@
 <template>
     <div>
         <template v-for="console in consoles">
-            <console-availability v-bind:console="console"/>
+            <console-availability v-bind:console="console" v-bind:key="console.id"/>
         </template>
     </div>
 </template>

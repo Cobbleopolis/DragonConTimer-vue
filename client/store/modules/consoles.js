@@ -1,4 +1,6 @@
+import Vue from 'vue';
 import Console from '../../../common/api/Console';
+import Game from '../../../common/api/Game';
 import StoreConstants from '../StoreConstants';
 
 const state = {
@@ -32,17 +34,35 @@ const mutations = {
         else
             addConsole(payload)
     },
-    // [StoreConstants.Stations.UPDATE_STATION_FIELDS](state, updateFieldsData) {
-    //     if (updateFieldsData) {
-    //         const existingStation = findExistingStation(state.stations, updateFieldsData);
-    //         if (existingStation) {
-    //             existingStation.station.playerName = updateFieldsData.playerName;
-    //             existingStation.station.currentConsole = updateFieldsData.currentConsole;
-    //             existingStation.station.currentGame = updateFieldsData.currentGame;
-    //             state.stations.splice(existingStation.index, 1, existingStation.station)
-    //         }
-    //     }
-    // }
+    [StoreConstants.Consoles.DELETE_CONSOLE](state, payload) {
+        if (payload) {
+            let key = typeof(payload) === 'string' ? payload : payload.id
+            Vue.delete(state.consoles, key)
+        }
+    },
+    [StoreConstants.Consoles.UPDATE_CONSOLE_FIELDS](state, updateFieldData) {
+        if (updateFieldData) {
+            let console = state.consoles[updateFieldData.id]
+            let updateData = updateFieldData.fields
+            if (console) {
+                if (updateFieldData.id !== updateData.id) {
+                    Vue.delete(state.consoles, updateFieldData.id)
+                    state.consoles = {...state.consoles,[updateData.id]: updateData}
+                } else {
+                    Object.keys(updateData).forEach(field => {
+                        if (field === 'games') {
+                            console[field] = input[field].map(o => new Game(o.name, o.count))
+                        } else {
+                            console[field] = input[field]
+                        }
+                    })
+                    state.consoles = {...state.consoles,[console.id]: console}
+                }
+            } else {
+                state.consoles = {...state.consoles,[updateData.id]: updateData}
+            }
+        }
+    }
 };
 
 // function findExistingStation(stationArr, station) {

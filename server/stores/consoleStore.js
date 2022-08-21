@@ -34,31 +34,57 @@ function getConsoles() {
     return consoles.values();
 }
 
+function addConsole(addedConsoleData) {
+    let addedConsole = new Console(
+        addedConsoleData.id,
+        addedConsoleData.name,
+        addedConsoleData.games,
+        addedConsoleData.checkoutWarning
+    )
+    consoles.set(addedConsole.id, addedConsole)
+    StoreUtils.updateStoreFile(storeDataFileName, Array.from(consoles.values()))
+}
+
 function updateFields(updateFieldData) {
     logger.debug("Updating fields: " + JSON.stringify(updateFieldData))
     if (updateFieldData) {
         let console = consoles.get(updateFieldData.id);
+        let updateData = updateFieldData.fields
         if (console) {
-            console.id = updateFieldData.id;
-            console.name = updateFieldData.name;
-            console.games = updateFieldData.games;
-            console.checkoutWarning = updateFieldData.checkoutWarning;
-            consoles.set(console.id, console);
-        } else {
-            let addedConsole = new Console(
-                updateFieldData.id,
-                updateFieldData.name,
-                updateFieldData.games,
-                updateFieldData.checkoutWarning
-            )
-            consoles.set(addedConsole.id, addedConsole)
+            if (updateFieldData.id !== updateData.id) {
+                consoles.delete(updateFieldData.id)
+                consoles.set(updateData.id, new Console(
+                    updateData.id,
+                    updateData.name,
+                    updateData.games,
+                    updateData.checkoutWarning
+                ))
+            } else {
+                Object.keys(updateData).forEach(field => {
+                    if (field === 'games') {
+                        console[field] = input[field].map(o => new Game(o.name, o.count))
+                    } else {
+                        console[field] = input[field]
+                    }
+                })
+                consoles.set(console.id, console)
+            }
         }
     }
+    StoreUtils.updateStoreFile(storeDataFileName, Array.from(consoles.values()))
+}
+
+function deleteConsole(deletedConsoleInfo) {
+    logger.debug("Deleting console: " + JSON.stringify(deletedConsoleInfo))
+    let key = typeof(deletedConsoleInfo) === 'string' ? deletedConsoleInfo : deletedConsoleInfo.id
+    consoles.delete(key)
     StoreUtils.updateStoreFile(storeDataFileName, Array.from(consoles.values()))
 }
 
 export default {
     init,
     getConsoles,
-    updateFields
+    addConsole,
+    updateFields,
+    deleteConsole
 };
