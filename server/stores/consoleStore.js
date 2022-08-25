@@ -1,5 +1,6 @@
 import logger from 'winston'
 import Console from '../../common/api/Console'
+import Game from '../../common/api/Game'
 import StoreUtils from '../util/storeUtil'
 
 const storeDataFileName = 'consoles.json'
@@ -62,9 +63,9 @@ function updateFields(updateFieldData) {
             } else {
                 Object.keys(updateData).forEach(field => {
                     if (field === 'games') {
-                        console[field] = input[field].map(o => new Game(o.name, o.count))
+                        console[field] = updateData[field].map(o => new Game(o.name, o.count))
                     } else {
-                        console[field] = input[field]
+                        console[field] = updateData[field]
                     }
                 })
                 consoles.set(console.id, console)
