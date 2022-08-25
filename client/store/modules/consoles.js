@@ -51,9 +51,9 @@ const mutations = {
                 } else {
                     Object.keys(updateData).forEach(field => {
                         if (field === 'games') {
-                            console[field] = input[field].map(o => new Game(o.name, o.count))
+                            console[field] = updateData[field].map(o => new Game(o.name, o.count))
                         } else {
-                            console[field] = input[field]
+                            console[field] = updateData[field]
                         }
                     })
                     state.consoles = {...state.consoles,[console.id]: console}
