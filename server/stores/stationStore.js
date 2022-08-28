@@ -45,7 +45,7 @@ function addStation(addStationData) {
         addStationData.notes
     )
     stations.set(addedStation.id, addedStation)
-    StoreUtils.updateStoreFile(storeDataFileName, Array.from(consoles.values()))
+    StoreUtils.updateStoreFile(storeDataFileName, Array.from(stations.values()))
 }
 
 function updateFields(updateFieldData) {
