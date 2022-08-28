@@ -1,7 +1,7 @@
 {
   "name": "dragoncon-timer",
   "displayName": "DragonCon Timer",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Timing application for DragonCon LAN Gaming",
   "main": "index.js",
   "author": "Cobbleopolis",
